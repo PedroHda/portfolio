@@ -195,7 +195,7 @@ export default function Home() {
       <main>
         <section className="hero" id="inicio" aria-labelledby="hero-title">
           <Image
-            src="/images/foto.jpg"
+            src="/images/hero-tech-background.webp"
             alt=""
             fill
             sizes="100vw"
