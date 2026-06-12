@@ -18,6 +18,7 @@ import {
   TerminalSquare,
   Wrench,
 } from "lucide-react";
+import { ThemeToggle } from "./components/ThemeToggle";
 
 type Experience = {
   company: string;
@@ -59,6 +60,12 @@ const navItems = [
   { href: "#contato", label: "Contato" },
 ];
 
+const metrics = [
+  { value: "4+", label: "anos criando soluções" },
+  { value: "150+", label: "ferramentas CATIA migradas" },
+  { value: "2026", label: "Engenharia da Computação" },
+];
+
 const skillGroups: SkillGroup[] = [
   {
     title: "Frontend",
@@ -76,7 +83,7 @@ const skillGroups: SkillGroup[] = [
     items: ["SQL Server", "MySQL", "Modelagem", "Regras de negócio"],
   },
   {
-    title: "Engenharia e ferramentas",
+    title: "Engenharia",
     icon: Wrench,
     items: ["Windows Forms", "CATIA V5", "API COM+", "Flutter", "Git"],
   },
@@ -123,7 +130,7 @@ const projects: Project[] = [
     type: "Aplicativo desktop",
     status: markdownReaderExists ? "Download disponível" : "Download em breve",
     description:
-      "Projeto em formato executável para abrir e visualizar arquivos Markdown no Windows, pensado para leitura local rápida e simples.",
+      "Executável para abrir e visualizar arquivos Markdown no Windows, pensado para leitura local rápida e simples.",
     tags: ["Windows", "Markdown", ".exe", "Desktop"],
     downloadHref: markdownReaderExists ? markdownReaderPath : undefined,
   },
@@ -160,93 +167,123 @@ export default function Home() {
             <Image
               src="/images/logo.png"
               alt=""
-              width={44}
-              height={44}
+              width={42}
+              height={42}
               className="brand-logo"
               priority
             />
             <span>Pedro Domiciano</span>
           </a>
 
-          <div className="nav-links">
-            {navItems.map((item) => (
-              <a href={item.href} key={item.href}>
-                {item.label}
-              </a>
-            ))}
-          </div>
-
-          <details className="mobile-nav">
-            <summary aria-label="Abrir menu">
-              <Menu size={22} />
-              <span className="sr-only">Menu</span>
-            </summary>
-            <div className="mobile-nav-panel">
+          <div className="nav-actions">
+            <div className="nav-links">
               {navItems.map((item) => (
                 <a href={item.href} key={item.href}>
                   {item.label}
                 </a>
               ))}
             </div>
-          </details>
+
+            <ThemeToggle />
+
+            <details className="mobile-nav">
+              <summary aria-label="Abrir menu">
+                <Menu size={22} />
+                <span className="sr-only">Menu</span>
+              </summary>
+              <div className="mobile-nav-panel">
+                {navItems.map((item) => (
+                  <a href={item.href} key={item.href}>
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </details>
+          </div>
         </nav>
       </header>
 
       <main>
         <section className="hero" id="inicio" aria-labelledby="hero-title">
-          <Image
-            src="/images/hero-tech-background.webp"
-            alt=""
-            fill
-            sizes="100vw"
-            className="hero-image"
-            priority
-          />
-          <div className="hero-scrim" />
+          <div className="section-inner hero-grid">
+            <div className="hero-copy">
+              <p className="eyebrow">Desenvolvedor Fullstack</p>
+              <h1 id="hero-title">
+                Soluções web, APIs e automação com foco em engenharia.
+              </h1>
+              <p className="hero-lead">
+                Sou Pedro Domiciano. Trabalho com React, TypeScript, C#, .NET e
+                bancos SQL para transformar regras de negócio em produtos,
+                integrações e ferramentas confiáveis.
+              </p>
 
-          <div className="hero-content">
-            <p className="eyebrow">Desenvolvedor Fullstack</p>
-            <h1 id="hero-title">Pedro Domiciano</h1>
-            <p className="hero-lead">
-              Construo soluções web, APIs REST e ferramentas de automação com
-              React, TypeScript, C# e .NET para ambientes de engenharia e
-              produtos digitais.
-            </p>
+              <div className="hero-actions" aria-label="Ações principais">
+                <a className="button button-primary" href="#projetos">
+                  <TerminalSquare size={18} />
+                  Ver projetos
+                </a>
+                <a
+                  className="button button-secondary"
+                  href={contact.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <ArrowUpRight size={18} />
+                  LinkedIn
+                </a>
+              </div>
 
-            <div className="hero-actions" aria-label="Ações principais">
-              <a className="button button-primary" href="#projetos">
-                <TerminalSquare size={18} />
-                Ver projetos
-              </a>
-              <a
-                className="button button-secondary"
-                href={contact.linkedin}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <ArrowUpRight size={18} />
-                LinkedIn
-              </a>
+              <div className="hero-meta" aria-label="Informações rápidas">
+                <span>
+                  <MapPin size={17} />
+                  {contact.location}
+                </span>
+                <span>
+                  <BriefcaseBusiness size={17} />
+                  .NET, React e APIs
+                </span>
+              </div>
             </div>
 
-            <div className="hero-meta" aria-label="Informações rápidas">
-              <span>
-                <MapPin size={17} />
-                {contact.location}
-              </span>
-              <span>
-                <BriefcaseBusiness size={17} />
-                .NET, React e APIs
-              </span>
+            <div className="hero-visual" aria-label="Resumo visual do perfil">
+              <Image
+                src="/images/hero-tech-background.webp"
+                alt=""
+                fill
+                sizes="(max-width: 980px) 100vw, 48vw"
+                className="hero-panel-image"
+                priority
+              />
+              <div className="hero-visual-overlay" />
+              <div className="status-card status-card-top">
+                <span>stack atual</span>
+                <strong>React · .NET · SQL</strong>
+              </div>
+              <div className="status-card status-card-bottom">
+                <span>foco</span>
+                <strong>APIs, automação e legado</strong>
+              </div>
             </div>
+          </div>
+
+          <div className="section-inner metrics-strip">
+            {metrics.map((metric) => (
+              <div className="metric-item" key={metric.label}>
+                <strong>{metric.value}</strong>
+                <span>{metric.label}</span>
+              </div>
+            ))}
           </div>
         </section>
 
-        <section className="section-band section-light" id="sobre">
-          <div className="section-inner about-grid">
-            <div>
+        <section className="section-band" id="sobre">
+          <div className="section-inner split-section">
+            <div className="section-heading sticky-heading">
               <p className="eyebrow">Sobre mim</p>
               <h2>Fullstack com base forte em produto, backend e automação.</h2>
+            </div>
+
+            <div className="content-stack">
               <p className="section-lead">
                 Minha trajetória começou com Python, HTML e CSS em 2019 e
                 evoluiu para projetos profissionais com C#, .NET, React,
@@ -260,19 +297,19 @@ export default function Home() {
                 de regras de negócio e automações para engenharia, incluindo
                 integrações com CATIA V5 e apoio ao time KBE na Embraer.
               </p>
-            </div>
 
-            <div className="profile-summary" aria-label="Resumo do perfil">
-              {highlights.map((item) => (
-                <span key={item}>{item}</span>
-              ))}
+              <div className="profile-summary" aria-label="Resumo do perfil">
+                {highlights.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="section-band" id="experiencia">
-          <div className="section-inner">
-            <div className="section-heading">
+        <section className="section-band section-muted" id="experiencia">
+          <div className="section-inner split-section">
+            <div className="section-heading sticky-heading">
               <p className="eyebrow">Experiência</p>
               <h2>Onde tenho criado e sustentado soluções.</h2>
             </div>
@@ -325,9 +362,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section-band section-light" id="skills">
+        <section className="section-band" id="skills">
           <div className="section-inner">
-            <div className="section-heading">
+            <div className="section-heading wide-heading">
               <p className="eyebrow">Skills</p>
               <h2>Tecnologias alinhadas ao currículo.</h2>
             </div>
@@ -354,17 +391,11 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section-band" id="projetos">
-          <div className="section-inner">
-            <div className="section-heading split-heading">
-              <div>
-                <p className="eyebrow">Projetos</p>
-                <h2>Projetos em destaque.</h2>
-              </div>
-              <p>
-                Soluções desktop e web com foco em utilidade prática,
-                automação e leitura local de arquivos.
-              </p>
+        <section className="section-band section-muted" id="projetos">
+          <div className="section-inner split-section">
+            <div className="section-heading sticky-heading">
+              <p className="eyebrow">Projetos</p>
+              <h2>Espaço para produtos, downloads e experimentos.</h2>
             </div>
 
             <div className="projects-grid">
@@ -407,9 +438,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section-band section-light" id="formacao">
+        <section className="section-band" id="formacao">
           <div className="section-inner">
-            <div className="section-heading">
+            <div className="section-heading wide-heading">
               <p className="eyebrow">Formação</p>
               <h2>Base acadêmica e idiomas.</h2>
             </div>
