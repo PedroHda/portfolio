@@ -1,6 +1,4 @@
 import Image from "next/image";
-import path from "node:path";
-import { existsSync } from "node:fs";
 import type { ComponentType } from "react";
 import {
   ArrowUpRight,
@@ -8,7 +6,6 @@ import {
   CalendarDays,
   Code2,
   Database,
-  Download,
   GraduationCap,
   Mail,
   Menu,
@@ -19,6 +16,8 @@ import {
   Wrench,
 } from "lucide-react";
 import { ThemeToggle } from "./components/ThemeToggle";
+import { Projects } from "./components/Projects";
+import { githubProfile } from "./data/projects";
 
 type Experience = {
   company: string;
@@ -34,15 +33,6 @@ type SkillGroup = {
   title: string;
   icon: ComponentType<{ size?: number; strokeWidth?: number }>;
   items: string[];
-};
-
-type Project = {
-  title: string;
-  type: string;
-  status: string;
-  description: string;
-  tags: string[];
-  downloadHref?: string;
 };
 
 const contact = {
@@ -116,23 +106,6 @@ const experiences: Experience[] = [
     ],
     stack: ["React", "TypeScript", "C#", "SQL Server", "JavaScript"],
     logo: "/images/2rp-net-squareLogo-1635959877878.png",
-  },
-];
-
-const markdownReaderPath = "/downloads/leitor-markdown.exe";
-const markdownReaderExists = existsSync(
-  path.join(process.cwd(), "public", "downloads", "leitor-markdown.exe"),
-);
-
-const projects: Project[] = [
-  {
-    title: "Leitor de Markdown para Windows",
-    type: "Aplicativo desktop",
-    status: markdownReaderExists ? "Download disponível" : "Download em breve",
-    description:
-      "Executável para abrir e visualizar arquivos Markdown no Windows, pensado para leitura local rápida e simples.",
-    tags: ["Windows", "Markdown", ".exe", "Desktop"],
-    downloadHref: markdownReaderExists ? markdownReaderPath : undefined,
   },
 ];
 
@@ -392,49 +365,18 @@ export default function Home() {
         </section>
 
         <section className="section-band section-muted" id="projetos">
-          <div className="section-inner split-section">
-            <div className="section-heading sticky-heading">
-              <p className="eyebrow">Projetos</p>
-              <h2>Espaço para produtos, downloads e experimentos.</h2>
+          <div className="section-inner">
+            <div className="projects-heading">
+              <div className="section-heading">
+                <p className="eyebrow">Projetos</p>
+                <h2>Ideias que viraram projetos.</h2>
+                <p>Aplicativos, jogos e sites. Conheça os detalhes ou baixe os APKs disponíveis.</p>
+              </div>
+              <a className="projects-github-link" href={githubProfile} target="_blank" rel="noreferrer">
+                Meu GitHub <ArrowUpRight size={18} aria-hidden="true" />
+              </a>
             </div>
-
-            <div className="projects-grid">
-              {projects.map((project) => (
-                <article className="project-card" key={project.title}>
-                  <div className="project-meta">
-                    <span>{project.type}</span>
-                    <strong>{project.status}</strong>
-                  </div>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-
-                  <div className="tag-row" aria-label="Tecnologias do projeto">
-                    {project.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-
-                  {project.downloadHref ? (
-                    <a
-                      className="button button-primary project-action"
-                      href={project.downloadHref}
-                      download
-                    >
-                      <Download size={18} />
-                      Baixar .exe
-                    </a>
-                  ) : (
-                    <span
-                      className="button button-disabled project-action"
-                      aria-disabled="true"
-                    >
-                      <Download size={18} />
-                      Download em breve
-                    </span>
-                  )}
-                </article>
-              ))}
-            </div>
+            <Projects />
           </div>
         </section>
 

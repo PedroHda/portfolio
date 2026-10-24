@@ -764,66 +764,503 @@ section {
   margin-top: 18px;
 }
 
-.projects-grid {
-  grid-template-columns: 1fr;
-}
-
-.project-card {
-  position: relative;
-  padding: 28px;
-  overflow: hidden;
-}
-
-.project-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-top: 3px solid var(--teal);
-  pointer-events: none;
-}
-
-.project-meta {
+.projects-heading,
+.project-card-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 16px;
 }
 
-.project-meta span,
-.project-meta strong {
-  min-height: 32px;
+.projects-heading {
+  align-items: flex-start;
+}
+
+.projects-heading .section-heading {
+  margin-bottom: 24px;
+}
+
+.projects-heading .section-heading > p:last-child {
+  margin-bottom: 0;
+}
+
+.projects-github-link,
+.project-details-link,
+.project-download-link,
+.back-link,
+.project-nav-back,
+.readme-link,
+.project-footer a {
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
-  border-radius: 999px;
-  padding: 0 10px;
-  font-size: 0.82rem;
+  gap: 7px;
+  font-weight: 750;
 }
 
-.project-meta span {
-  background: color-mix(in srgb, var(--teal) 12%, transparent);
-  color: var(--teal-dark);
-  font-weight: 840;
-}
-
-:root[data-theme="dark"] .project-meta span {
+.projects-github-link {
+  flex-shrink: 0;
   color: var(--teal);
 }
 
-.project-meta strong {
-  background: color-mix(in srgb, var(--amber) 14%, transparent);
-  color: var(--amber);
-  font-weight: 780;
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
 }
 
-.project-card p {
+.project-filter {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
   color: var(--muted);
+  font-weight: 750;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.project-filter span {
+  min-width: 22px;
+  border-radius: 4px;
+  background: var(--surface-muted);
+  padding: 0 5px;
+  font-size: 0.76rem;
+  text-align: center;
+}
+
+.project-filter:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.project-filter[aria-pressed="true"] {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: var(--surface);
+}
+
+.project-filter[aria-pressed="true"] span {
+  background: color-mix(in srgb, var(--surface) 18%, transparent);
+}
+
+.projects-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.project-card {
+  --project-accent: var(--teal);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-top: 3px solid var(--project-accent);
+  overflow: hidden;
+}
+
+.project-coloring-game,
+.project-ligia-rosa-atelier {
+  --project-accent: var(--coral);
+}
+
+.project-mdreader,
+.project-luiz-fernando-imobiliaria {
+  --project-accent: var(--blue);
+}
+
+.project-nosso-casamento {
+  --project-accent: var(--amber);
+}
+
+.project-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--project-accent) 22%, var(--line));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--project-accent) 9%, var(--surface));
+  color: var(--project-accent);
+}
+
+.project-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.project-status.has-download {
+  color: var(--teal);
+}
+
+.project-status.has-download::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.project-card .project-type {
+  margin: 22px 0 6px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.project-card h3 {
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.project-card h3 a:hover,
+.project-details-link:hover,
+.back-link:hover,
+.project-nav-back:hover,
+.readme-link:hover {
+  color: var(--teal);
+}
+
+.project-description {
+  flex-grow: 1;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
   overflow-wrap: anywhere;
 }
 
-.project-action {
-  width: fit-content;
-  margin-top: 22px;
+.project-card .tag-row {
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.project-card .tag-row span {
+  min-height: 28px;
+  font-size: 0.75rem;
+}
+
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 10px;
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  font-size: 0.84rem;
+}
+
+.project-download-link {
+  color: var(--teal);
+}
+
+.project-download-link:hover,
+.projects-github-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.project-nav-back {
+  color: var(--muted);
+  padding: 0 10px;
+  font-size: 0.9rem;
+}
+
+.project-page {
+  --project-accent: var(--teal);
+  padding: 32px 20px 64px;
+}
+
+.project-page.project-coloring-game,
+.project-page.project-ligia-rosa-atelier {
+  --project-accent: var(--coral);
+}
+
+.project-page.project-mdreader,
+.project-page.project-luiz-fernando-imobiliaria {
+  --project-accent: var(--blue);
+}
+
+.project-page.project-nosso-casamento {
+  --project-accent: var(--amber);
+}
+
+.back-link {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.project-detail-header {
+  max-width: 820px;
+  padding: 36px 0 42px;
+}
+
+.project-icon-large {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 22px;
+  border-radius: 16px;
+}
+
+.project-detail-header h1 {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+.project-detail-lead {
+  max-width: 700px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 1.13rem;
+}
+
+.project-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  align-items: start;
+  gap: 48px;
+  border-top: 1px solid var(--line);
+  padding-top: 40px;
+}
+
+.project-detail-content {
+  min-width: 0;
+  display: grid;
+  gap: 32px;
+}
+
+.project-detail-section h2,
+.project-sidebar h2 {
+  margin: 0 0 14px;
+  color: var(--navy);
+  font-size: 1.25rem;
+  line-height: 1.35;
+}
+
+.project-detail-section p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.project-feature-list {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+}
+
+.project-feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.project-feature-list svg {
+  flex: 0 0 18px;
+  margin-top: 4px;
+  color: var(--teal);
+}
+
+.project-preview {
+  margin: 0;
+}
+
+.project-preview-frame {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-muted);
+  padding: 12px;
+}
+
+.project-preview img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 560px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.project-preview figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.project-sidebar {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 18px;
+}
+
+.project-download-panel,
+.project-source-panel {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.project-download-panel {
+  border-top: 3px solid var(--teal);
+}
+
+.download-panel-icon {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--teal);
+}
+
+.project-sidebar p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.87rem;
+}
+
+.download-info {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0;
+  font-size: 0.86rem;
+}
+
+.download-info > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.download-info dt {
+  color: var(--muted);
+}
+
+.download-info dd {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 750;
+  text-align: right;
+}
+
+.project-sidebar .button {
+  width: 100%;
+}
+
+.project-sidebar .download-note {
+  margin-top: 16px;
+  font-size: 0.8rem;
+}
+
+.install-guide {
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.install-guide summary {
+  min-height: 32px;
+  color: var(--ink);
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.install-guide ol {
+  margin-bottom: 0;
+  padding-left: 20px;
+}
+
+.install-guide li + li {
+  margin-top: 8px;
+}
+
+.project-source-panel > .project-status {
+  margin-bottom: 18px;
+}
+
+.readme-link {
+  margin-top: 10px;
+  color: var(--teal);
+  font-size: 0.85rem;
+}
+
+.project-source-panel > p {
+  margin-top: 12px;
+  font-size: 0.8rem;
+}
+
+.project-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 56px;
+  border-top: 1px solid var(--line);
+  padding-top: 28px;
+}
+
+.project-pagination a {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--teal);
+  font-weight: 750;
+}
+
+.project-pagination a:last-child {
+  margin-left: auto;
+  text-align: right;
+}
+
+.project-pagination small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.project-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 28px;
+  border-top: 1px solid var(--line);
+  padding: 24px 20px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.project-footer p {
+  margin: 0;
+}
+
+:where(a, button, summary):focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 4px;
 }
 
 .education-grid {
@@ -958,6 +1395,24 @@ section {
   .skills-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .project-detail-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .project-sidebar {
+    position: static;
+    grid-row: 1;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    align-items: start;
+  }
 }
 
 @media (max-width: 760px) {
@@ -1038,7 +1493,7 @@ section {
 
   .role-header,
   .experience-topline,
-  .project-meta {
+  .projects-heading {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -1050,8 +1505,29 @@ section {
   .profile-summary,
   .skills-grid,
   .education-grid,
-  .footer-grid {
+  .footer-grid,
+  .projects-grid {
     grid-template-columns: 1fr;
+  }
+
+  .projects-heading {
+    gap: 0;
+  }
+
+  .projects-github-link {
+    margin-bottom: 20px;
+  }
+
+  .project-page {
+    padding: 20px 16px 40px;
+  }
+
+  .project-detail-header {
+    padding: 24px 0 32px;
+  }
+
+  .project-detail-layout {
+    padding-top: 28px;
   }
 }
 
@@ -1103,8 +1579,7 @@ section {
   }
 
   .hero-actions .button,
-  .hero-meta span,
-  .project-action {
+  .hero-meta span {
     width: 100%;
   }
 
@@ -1141,6 +1616,25 @@ section {
     align-items: flex-start;
     min-height: 52px;
     padding: 12px;
+  }
+
+  .project-nav-back {
+    padding: 0 6px;
+  }
+
+  .project-nav-back > svg {
+    display: none;
+  }
+
+  .project-filter {
+    gap: 6px;
+    padding: 8px 10px;
+    font-size: 0.84rem;
+  }
+
+  .project-pagination {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 

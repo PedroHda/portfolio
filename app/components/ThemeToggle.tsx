@@ -44,6 +44,7 @@ export function ThemeToggle() {
     <div className="theme-switch" aria-label="Escolher tema">
       <button
         type="button"
+        aria-label="Usar tema claro"
         aria-pressed={theme === "light"}
         data-theme-option="light"
         className={theme === "light" ? "active" : ""}
@@ -54,6 +55,7 @@ export function ThemeToggle() {
       </button>
       <button
         type="button"
+        aria-label="Usar tema escuro"
         aria-pressed={theme === "dark"}
         data-theme-option="dark"
         className={theme === "dark" ? "active" : ""}
