@@ -1,34 +1,5 @@
-export type ProjectCategory = "Aplicativos" | "Jogos" | "Sites";
-
-export type Project = {
-  slug: string;
-  title: string;
-  repository: string;
-  category: ProjectCategory;
-  type: string;
-  status: string;
-  description: string;
-  overview: string;
-  tags: string[];
-  features: string[];
-  notes: string;
-  readmeAvailable: boolean;
-  download?: {
-    href: string;
-    filename: string;
-    version: string;
-    size: string;
-    requirements: string;
-    note: string;
-  };
-  preview?: {
-    src: string;
-    alt: string;
-    caption: string;
-    width: number;
-    height: number;
-  };
-};
+import { images } from "@/assets";
+import type { Project } from "@/types/project";
 
 export const githubProfile = "https://github.com/PedroHda";
 
@@ -85,7 +56,7 @@ export const projects: Project[] = [
       "A experiência web está implementada. A versão Android tem renderizador nativo e configuração de build, mas o README informa que ainda não há APK compilado nem teste em aparelho.",
     readmeAvailable: true,
     preview: {
-      src: "/images/projects/coloring-game.jpg",
+      src: images.projects.coloringGame,
       alt: "Editor de pintura do Colorê com uma ilustração em andamento e ferramentas de cores",
       caption: "Captura da versão web publicada na documentação do projeto.",
       width: 755,
@@ -122,7 +93,7 @@ export const projects: Project[] = [
       note: "Instala como Carrinho Teste. É a versão recomendada pelo projeto para testar sem substituir o aplicativo anterior.",
     },
     preview: {
-      src: "/images/projects/carrinho-de-compras.png",
+      src: images.projects.shoppingCart,
       alt: "Tela do Carrinho de Compras com listas de supermercado e progresso dos itens",
       caption: "Interface do aplicativo com dados fictícios, conforme a documentação.",
       width: 430,
@@ -159,7 +130,7 @@ export const projects: Project[] = [
       note: "Inclui dados de exemplo e funcionamento offline. O guia Android no repositório explica a instalação e o armazenamento.",
     },
     preview: {
-      src: "/images/projects/nosso-casamento.jpg",
+      src: images.projects.wedding,
       alt: "Painel Nosso Casamento com contagem regressiva, orçamento e próximos passos",
       caption: "Visão geral do painel com os dados de demonstração do projeto.",
       width: 1425,
@@ -196,7 +167,7 @@ export const projects: Project[] = [
       note: "O aplicativo aparece como RotaCerta no celular. A primeira abertura carrega uma base de demonstração.",
     },
     preview: {
-      src: "/images/projects/projeto-van.png",
+      src: images.projects.schoolTransport,
       alt: "Dashboard do RotaCerta Escolar com indicadores e distribuição do transporte por escola",
       caption: "Dashboard do protótipo com a base de demonstração.",
       width: 1280,
