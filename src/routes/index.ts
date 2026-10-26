@@ -1,20 +1,28 @@
-export const routes = {
-  home: "/",
-  projectDetails: (slug: string) => `/projetos/${slug}`,
-  sections: {
-    home: "/#inicio",
-    about: "/#sobre",
-    experience: "/#experiencia",
-    skills: "/#skills",
-    projects: "/#projetos",
-    contact: "/#contato",
-  },
-};
+import { defaultLocale, localizePath, type Locale } from "@/i18n/config";
 
-export const navigationItems = [
-  { href: routes.sections.about, label: "Sobre" },
-  { href: routes.sections.experience, label: "Experiência" },
-  { href: routes.sections.skills, label: "Skills" },
-  { href: routes.sections.projects, label: "Projetos" },
-  { href: routes.sections.contact, label: "Contato" },
-];
+export function getRoutes(locale: Locale = defaultLocale) {
+  const local = (path: string) => localizePath(path, locale);
+  return {
+    home: local("/"),
+    projectDetails: (slug: string) => local(`/projetos/${encodeURIComponent(slug)}`),
+    sections: {
+      home: local("/#inicio"),
+      about: local("/#sobre"),
+      experience: local("/#experiencia"),
+      skills: local("/#skills"),
+      projects: local("/#projetos"),
+      contact: local("/#contato"),
+    },
+  };
+}
+
+export function getNavigationItems(locale: Locale) {
+  const routes = getRoutes(locale);
+  return [
+    { href: routes.sections.about, labelKey: "navigation.about" },
+    { href: routes.sections.experience, labelKey: "navigation.experience" },
+    { href: routes.sections.skills, labelKey: "navigation.skills" },
+    { href: routes.sections.projects, labelKey: "navigation.projects" },
+    { href: routes.sections.contact, labelKey: "navigation.contact" },
+  ];
+}

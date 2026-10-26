@@ -1,0 +1,93 @@
+{
+  "metrics": {
+    "experience": "years building solutions",
+    "tools": "CATIA tools migrated",
+    "degree": "Computer Engineering"
+  },
+  "skills": {
+    "frontend": {
+      "title": "Frontend",
+      "items": [
+        "React",
+        "TypeScript",
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "UI/UX"
+      ]
+    },
+    "backend": {
+      "title": "Backend",
+      "items": [
+        "C#",
+        ".NET",
+        ".NET Core",
+        "REST APIs",
+        "Python",
+        "PHP",
+        "VB.NET"
+      ]
+    },
+    "data": {
+      "title": "Data",
+      "items": [
+        "SQL Server",
+        "MySQL",
+        "Data modeling",
+        "Business rules"
+      ]
+    },
+    "engineering": {
+      "title": "Engineering",
+      "items": [
+        "Windows Forms",
+        "CATIA V5",
+        "COM+ API",
+        "Flutter",
+        "Git"
+      ]
+    }
+  },
+  "experiences": {
+    "mult-e": {
+      "role": ".NET Developer — Junior III",
+      "period": "Dec 2024 – present",
+      "context": "Technology, digital engineering and solutions for enterprise clients.",
+      "highlights": [
+        "Assigned to Embraer’s KBE team, developing automation and engineering support tools.",
+        "Building and maintaining Windows Forms solutions, CATIA V5 tools and COM+ API integrations.",
+        "Developing scalable REST APIs, analyzing legacy software and extracting business rules with the MultMercado team.",
+        "Taking part in the migration, testing, validation and update of more than 150 tools for a new CATIA version."
+      ]
+    },
+    "2rp": {
+      "role": "Full Stack Developer — Junior, Trainee and Intern",
+      "period": "Aug 2021 – Jan 2024",
+      "context": "Technology company with web products and an anti-fraud platform.",
+      "highlights": [
+        "Working with clients to assess bugs, requests and ongoing product improvements.",
+        "Developing frontend and backend solutions focused on user experience and feature quality.",
+        "Planning and building new platform screens, including UI/UX improvements.",
+        "Fixing bugs and developing the frontend of an anti-fraud platform."
+      ]
+    }
+  },
+  "highlights": [
+    "Full Stack Developer",
+    "REST APIs and integrations",
+    "Engineering automation",
+    "React, TypeScript and .NET"
+  ],
+  "education": {
+    "degree": {
+      "title": "Computer Engineering",
+      "detail": "UNIVAP",
+      "period": "Graduated in 2026"
+    },
+    "english": {
+      "title": "English",
+      "detail": "Intermediate",
+      "period": "Technical communication and reading documentation"
+    }
+  }
+}

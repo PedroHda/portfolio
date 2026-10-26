@@ -1,18 +1,26 @@
+"use client";
+
 import Image from "next/image";
+import { useI18n } from "@/i18n/use-i18n";
 import Link from "next/link";
 import { ArrowLeft, Menu } from "lucide-react";
 import { images } from "@/assets";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { navigationItems, routes } from "@/routes";
+import { getNavigationItems, getRoutes } from "@/routes";
+import { LanguageSwitch } from "@/components/language-switch";
 
 export function SiteHeader({ compact = false }: { compact?: boolean }) {
+  const { t, locale } = useI18n();
+  const routes = getRoutes(locale);
+  const navigationItems = getNavigationItems(locale);
+
   return (
     <header className="site-header">
-      <nav className="nav" aria-label="Navegação principal">
+      <nav className="nav" aria-label={t("navigation.label")}>
         <Link
           className="brand"
           href={compact ? routes.home : routes.sections.home}
-          aria-label={compact ? "Portfólio de Pedro Domiciano" : "Ir para o início"}
+          aria-label={compact ? t("navigation.portfolio") : t("navigation.home")}
         >
           <Image
             src={images.logo}
@@ -29,30 +37,31 @@ export function SiteHeader({ compact = false }: { compact?: boolean }) {
           {compact ? (
             <Link className="project-nav-back" href={routes.sections.projects}>
               <ArrowLeft size={17} aria-hidden="true" />
-              <span>Projetos</span>
+              <span>{t("navigation.projects")}</span>
             </Link>
           ) : (
             <div className="nav-links">
               {navigationItems.map((item) => (
                 <a href={item.href} key={item.href}>
-                  {item.label}
+                  {t(item.labelKey)}
                 </a>
               ))}
             </div>
           )}
 
+          <LanguageSwitch />
           <ThemeToggle />
 
           {!compact && (
             <details className="mobile-nav">
-              <summary aria-label="Abrir menu">
+              <summary aria-label={t("navigation.openMenu")}>
                 <Menu size={22} />
-                <span className="sr-only">Menu</span>
+                <span className="sr-only">{t("navigation.menu")}</span>
               </summary>
               <div className="mobile-nav-panel">
                 {navigationItems.map((item) => (
                   <a href={item.href} key={item.href}>
-                    {item.label}
+                    {t(item.labelKey)}
                   </a>
                 ))}
               </div>

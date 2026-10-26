@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/i18n/use-i18n";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -26,6 +27,7 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeToggle() {
+  const { t } = useI18n();
   const [theme, setTheme] = useState<Theme | null>(null);
 
   useEffect(() => {
@@ -41,28 +43,28 @@ export function ThemeToggle() {
   }
 
   return (
-    <div className="theme-switch" aria-label="Escolher tema">
+    <div className="theme-switch" aria-label={t("theme.label")}>
       <button
         type="button"
-        aria-label="Usar tema claro"
+        aria-label={t("theme.useLight")}
         aria-pressed={theme === "light"}
         data-theme-option="light"
         className={theme === "light" ? "active" : ""}
         onClick={() => selectTheme("light")}
       >
         <Sun size={16} />
-        <span>Claro</span>
+        <span>{t("theme.light")}</span>
       </button>
       <button
         type="button"
-        aria-label="Usar tema escuro"
+        aria-label={t("theme.useDark")}
         aria-pressed={theme === "dark"}
         data-theme-option="dark"
         className={theme === "dark" ? "active" : ""}
         onClick={() => selectTheme("dark")}
       >
         <Moon size={16} />
-        <span>Escuro</span>
+        <span>{t("theme.dark")}</span>
       </button>
     </div>
   );

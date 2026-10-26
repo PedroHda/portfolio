@@ -1,0 +1,93 @@
+{
+  "metrics": {
+    "experience": "anos criando soluções",
+    "tools": "ferramentas CATIA migradas",
+    "degree": "Engenharia da Computação"
+  },
+  "skills": {
+    "frontend": {
+      "title": "Frontend",
+      "items": [
+        "React",
+        "TypeScript",
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "UI/UX"
+      ]
+    },
+    "backend": {
+      "title": "Backend",
+      "items": [
+        "C#",
+        ".NET",
+        ".NET Core",
+        "REST APIs",
+        "Python",
+        "PHP",
+        "VB.NET"
+      ]
+    },
+    "data": {
+      "title": "Dados",
+      "items": [
+        "SQL Server",
+        "MySQL",
+        "Modelagem",
+        "Regras de negócio"
+      ]
+    },
+    "engineering": {
+      "title": "Engenharia",
+      "items": [
+        "Windows Forms",
+        "CATIA V5",
+        "API COM+",
+        "Flutter",
+        "Git"
+      ]
+    }
+  },
+  "experiences": {
+    "mult-e": {
+      "role": "Desenvolvedor .NET JR III",
+      "period": "dez/2024 - atual",
+      "context": "Tecnologia, engenharia digital e soluções para clientes corporativos.",
+      "highlights": [
+        "Atuação alocada na Embraer com o time KBE, desenvolvendo ferramentas de automação e apoio à engenharia.",
+        "Criação e manutenção de soluções em Windows Forms, CATIA V5 e integrações via API COM+.",
+        "Desenvolvimento de APIs REST escaláveis, análise de softwares legados e extração de regras de negócio no time MultMercado.",
+        "Participação na migração, testes, validação e atualização de mais de 150 ferramentas para uma nova versão do CATIA."
+      ]
+    },
+    "2rp": {
+      "role": "Desenvolvedor Fullstack JR, Trainee e Estagiário",
+      "period": "ago/2021 - jan/2024",
+      "context": "Empresa de tecnologia com produtos web e plataforma antifraude.",
+      "highlights": [
+        "Relacionamento com clientes, avaliação de bugs, solicitações e evolução contínua do produto.",
+        "Desenvolvimento de soluções front-end e back-end com foco em experiência do usuário e qualidade de funcionalidades.",
+        "Planejamento e implementação de novas telas para a plataforma, incluindo melhorias de UI/UX.",
+        "Correção de bugs e desenvolvimento front-end em uma plataforma antifraude."
+      ]
+    }
+  },
+  "highlights": [
+    "Desenvolvedor Fullstack",
+    "REST APIs e integrações",
+    "Automação para engenharia",
+    "React, TypeScript e .NET"
+  ],
+  "education": {
+    "degree": {
+      "title": "Engenharia da Computação",
+      "detail": "UNIVAP",
+      "period": "Concluido em 2026"
+    },
+    "english": {
+      "title": "Inglês",
+      "detail": "Intermediário",
+      "period": "Comunicação técnica e leitura de documentação"
+    }
+  }
+}

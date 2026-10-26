@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "title": "Pedro Domiciano | Desenvolvedor Fullstack",
+    "description": "Portfólio de Pedro Domiciano, desenvolvedor Fullstack com experiência em .NET, React, TypeScript, REST APIs e automações para engenharia."
+  },
+  "navigation": {
+    "label": "Navegação principal",
+    "about": "Sobre",
+    "experience": "Experiência",
+    "skills": "Skills",
+    "projects": "Projetos",
+    "contact": "Contato",
+    "home": "Ir para o início",
+    "portfolio": "Portfólio de Pedro Domiciano",
+    "openMenu": "Abrir menu",
+    "menu": "Menu"
+  },
+  "language": {
+    "label": "Escolher idioma"
+  },
+  "theme": {
+    "label": "Escolher tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "useLight": "Usar tema claro",
+    "useDark": "Usar tema escuro"
+  },
+  "actions": {
+    "viewProjects": "Ver projetos",
+    "viewDetails": "Ver detalhes",
+    "viewProject": "Ver detalhes de {{title}}",
+    "downloadApk": "Baixar APK",
+    "downloadProject": "Baixar APK de {{title}}",
+    "github": "Ver no GitHub",
+    "myGithub": "Meu GitHub",
+    "readReadme": "Ler README completo",
+    "backToProjects": "Voltar aos projetos",
+    "allProjects": "Todos os projetos",
+    "nextProject": "Próximo projeto",
+    "talk": "Vamos conversar"
+  },
+  "filters": {
+    "label": "Filtrar projetos",
+    "all": "Todos",
+    "apps": "Aplicativos",
+    "games": "Jogos",
+    "websites": "Sites",
+    "apk": "Com APK",
+    "results_one": "{{count}} projeto exibido. Filtro: {{filter}}.",
+    "results_other": "{{count}} projetos exibidos. Filtro: {{filter}}."
+  },
+  "projects": {
+    "technologies": "Tecnologias do projeto",
+    "technologiesFor": "Tecnologias de {{title}}",
+    "overview": "O projeto em um minuto",
+    "features": "O que ele faz",
+    "status": "Estado atual",
+    "links": "Links e download do projeto",
+    "more": "Mais projetos",
+    "explore": "Explore o projeto",
+    "readmeNote": "Resumo baseado no README. Encontre instruções de uso, configuração e detalhes técnicos no repositório."
+  },
+  "download": {
+    "title": "Experimente no Android",
+    "version": "Versão",
+    "file": "Download",
+    "size": "{{size}} MB",
+    "variants": {
+      "test": "Teste",
+      "demo": "Demo"
+    },
+    "install": "Como instalar o APK",
+    "steps": [
+      "Baixe o arquivo no celular Android.",
+      "Abra o APK na pasta Downloads.",
+      "Se solicitado, autorize a instalação para o navegador ou gerenciador de arquivos usado.",
+      "Conclua a instalação e abra o aplicativo."
+    ]
+  },
+  "footer": {
+    "label": "Contato",
+    "title": "Vamos conversar sobre produto, APIs e automação.",
+    "signature": "Pedro Domiciano · Desenvolvedor Fullstack",
+    "copyright": "© {{year}} Pedro Domiciano. Todos os direitos reservados.",
+    "comingSoon": "Em breve"
+  }
+}

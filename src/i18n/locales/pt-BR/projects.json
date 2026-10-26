@@ -1,0 +1,127 @@
+{
+  "items": {
+    "mdreader": {
+      "type": "Aplicativo · Windows e Android",
+      "status": "APK disponível",
+      "description": "Leitor de Markdown para Windows e Android, com texto original, visualização formatada e recarga do documento.",
+      "overview": "Um leitor de arquivos .md e .markdown em C#, com núcleo compartilhado e Markdig para converter o conteúdo em HTML. A interface Windows usa Windows Forms; no Android, a interface nativa oferece seleção de documentos e visualização no celular.",
+      "features": [
+        "Abertura de .md e .markdown com seletores nativos de documentos.",
+        "Texto bruto e visualização formatada com títulos, tabelas, listas e blocos de código.",
+        "Recarregamento do documento após alterações em outro editor.",
+        "Núcleo compartilhado em C# e Markdig, com interfaces próprias para Windows e Android."
+      ],
+      "notes": "O MDReader é um leitor e não altera os documentos. O APK Android está publicado; a versão Windows pode ser compilada como executável portátil pelas instruções do repositório.",
+      "download": {
+        "requirements": "Android 8.0 ou superior",
+        "note": "APK assinado da versão 1.0.0 do MDReader para Android. Abra arquivos Markdown pelo seletor de documentos do celular."
+      }
+    },
+    "coloring-game": {
+      "type": "Jogo · Web e Android",
+      "status": "Android em desenvolvimento",
+      "description": "Colorê: uma jornada de pintura livre pela história, com personagens, roupas e progresso salvo.",
+      "overview": "Colorê — O Caminho das Cores combina pintura livre e exploração histórica. O jogador cria seu viajante, colore ilustrações de diferentes épocas e personaliza as roupas do personagem. A versão web oferece 15 caminhos e 75 ilustrações jogáveis.",
+      "features": [
+        "Pintura por traços contínuos com 12 ferramentas, materiais e cores livres.",
+        "Desfazer, refazer e apagar a tinta preservando os contornos do desenho.",
+        "Personagem personalizável, roupas pintáveis e progressão por XP.",
+        "Coleção de pinturas, salvamento local e backups."
+      ],
+      "notes": "A experiência web está implementada. A versão Android tem renderizador nativo e configuração de build, mas o README informa que ainda não há APK compilado nem teste em aparelho.",
+      "preview": {
+        "alt": "Editor de pintura do Colorê com uma ilustração em andamento e ferramentas de cores",
+        "caption": "Captura da versão web publicada na documentação do projeto."
+      }
+    },
+    "carrinho-de-compras": {
+      "type": "Aplicativo · Android",
+      "status": "APK disponível",
+      "description": "Listas de supermercado, leitura de notas fiscais e histórico de compras com dados no celular.",
+      "overview": "Aplicativo em português para planejar as compras do mercado e acompanhar o que foi comprado. As listas ficam separadas dos valores da conferência e do histórico, com armazenamento local em SQLite e uso sem cadastro.",
+      "features": [
+        "Criação de listas item a item, por texto em lote ou repetindo o mês anterior.",
+        "Controle de quantidades, itens no carrinho e exclusão com opção de desfazer.",
+        "Consulta de NFC-e de São Paulo por QR code e reconhecimento local de fotos de notas.",
+        "Histórico por período, busca por mercado ou produto e backup dos dados."
+      ],
+      "notes": "O APK recomendado no README instala o Carrinho Teste, que pode coexistir com o aplicativo original. Os dados ficam no aparelho; a transferência entre instalações é feita por backup.",
+      "download": {
+        "requirements": "Android 7.0 ou superior",
+        "note": "Instala como Carrinho Teste. É a versão recomendada pelo projeto para testar sem substituir o aplicativo anterior."
+      },
+      "preview": {
+        "alt": "Tela do Carrinho de Compras com listas de supermercado e progresso dos itens",
+        "caption": "Interface do aplicativo com dados fictícios, conforme a documentação."
+      }
+    },
+    "nosso-casamento": {
+      "type": "Aplicativo · Web e Android",
+      "status": "APK disponível",
+      "description": "Planejamento do casamento com orçamento, convidados, tarefas, fornecedores e contagem regressiva.",
+      "overview": "Um painel responsivo para reunir os detalhes do casamento em um só lugar. A versão Android empacota a experiência web com Capacitor e funciona offline, mantendo os cadastros e a contagem regressiva no dispositivo.",
+      "features": [
+        "Painel com contagem regressiva, indicadores e gráficos do planejamento.",
+        "Orçamento com despesas, pagamentos parciais, saldo e vencimentos.",
+        "Convidados com acompanhantes e confirmações, checklist e fornecedores.",
+        "Preferências do casal, busca global e exportação/importação de backups JSON."
+      ],
+      "notes": "O planejamento é local, sem login ou sincronização automática entre dispositivos. A demonstração começa com dados fictícios e permite começar do zero. A data de referência do projeto é 24 de julho de 2027.",
+      "download": {
+        "requirements": "Android · versão de demonstração",
+        "note": "Inclui dados de exemplo e funcionamento offline. O guia Android no repositório explica a instalação e o armazenamento."
+      },
+      "preview": {
+        "alt": "Painel Nosso Casamento com contagem regressiva, orçamento e próximos passos",
+        "caption": "Visão geral do painel com os dados de demonstração do projeto."
+      }
+    },
+    "projeto-van": {
+      "type": "Aplicativo · Android",
+      "status": "APK disponível",
+      "description": "RotaCerta Escolar: organização do transporte escolar com cadastros, indicadores, relatórios e backup.",
+      "overview": "Aplicativo Android para consultar crianças, responsáveis e escolas e acompanhar a operação do transporte escolar. O RotaCerta usa .NET MAUI Blazor Hybrid com interface Razor e banco SQLite local, incluindo relatórios e troca de cópias do banco entre aparelhos.",
+      "features": [
+        "Dashboard com indicadores, distribuição por escola e rota e agenda resumida.",
+        "Busca, filtros e fichas de crianças, escolas e responsáveis.",
+        "Pré-cadastro simplificado e exportação de relatórios Excel.",
+        "Download, compartilhamento, comparação e importação do banco local."
+      ],
+      "notes": "Protótipo funcional com dados de demonstração e pré-cadastro simplificado. A agenda ainda não controla presença ou embarques em tempo real. O aplicativo não possui sincronização em nuvem.",
+      "download": {
+        "requirements": "Android 7.0 ou superior",
+        "note": "O aplicativo aparece como RotaCerta no celular. A primeira abertura carrega uma base de demonstração."
+      },
+      "preview": {
+        "alt": "Dashboard do RotaCerta Escolar com indicadores e distribuição do transporte por escola",
+        "caption": "Dashboard do protótipo com a base de demonstração."
+      }
+    },
+    "luiz-fernando-imobiliaria": {
+      "type": "Site · Catálogo de imóveis",
+      "status": "Em desenvolvimento",
+      "description": "Portal de imóveis no Vale do Paraíba e Litoral Norte com filtros e atendimento pelo WhatsApp.",
+      "overview": "Site para apresentar imóveis e facilitar o contato com o corretor. O catálogo organiza casas, apartamentos e sobrados por região, com páginas individuais e uma experiência adaptada para computador e celular.",
+      "features": [
+        "Busca por bairro, cidade ou código do imóvel.",
+        "Filtros de cidade, tipo, preço e número de quartos, com ordenação dos resultados.",
+        "Páginas de imóveis com fotos, características e destaques.",
+        "Contato pelo WhatsApp com mensagem preparada para o imóvel escolhido."
+      ],
+      "notes": "Site em desenvolvimento. O repositório público ainda não contém código ou README; este resumo apresenta os recursos encontrados na versão local do projeto."
+    },
+    "ligia-rosa-atelier": {
+      "type": "Site · Catálogo artesanal",
+      "status": "Protótipo funcional",
+      "description": "Catálogo de pintura artesanal em tecido com coleções, variações de produtos e pedidos pelo WhatsApp.",
+      "overview": "Catálogo responsivo para valorizar peças artesanais e aproximar o visitante do atendimento. Desenvolvido com Next.js e TypeScript, apresenta coleções e produtos e prepara a mensagem do pedido com as variações escolhidas.",
+      "features": [
+        "Apresentação de coleções e produtos com fotografias e descrições.",
+        "Navegação por categorias e seleção de variações das peças.",
+        "Mensagem de pedido preparada automaticamente para o WhatsApp.",
+        "Layout responsivo para conhecer o catálogo no celular ou computador."
+      ],
+      "notes": "Protótipo funcional com preços e depoimentos ilustrativos. O atendimento acontece pelo WhatsApp; ainda não há carrinho, pagamento integrado ou backend."
+    }
+  }
+}

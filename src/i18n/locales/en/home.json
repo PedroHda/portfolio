@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "eyebrow": "Full Stack Developer",
+    "title": "Web solutions, APIs and automation for engineering.",
+    "lead": "I’m Pedro Domiciano. I work with React, TypeScript, C#, .NET and SQL databases to turn business rules into reliable products, integrations and tools.",
+    "actions": "Main actions",
+    "information": "Quick information",
+    "stack": ".NET, React and APIs",
+    "visual": "Visual profile overview",
+    "currentStack": "current stack",
+    "focus": "focus",
+    "focusValue": "APIs, automation and legacy systems"
+  },
+  "about": {
+    "eyebrow": "About me",
+    "title": "Full stack experience built on products, backend and automation.",
+    "lead": "My journey began with Python, HTML and CSS in 2019 and grew into professional projects with C#, .NET, React, TypeScript and SQL databases. I have worked in cross-functional teams, handled client requests, fixed bugs, developed web platforms and modernized legacy tools.",
+    "body": "In recent projects, I have worked on REST APIs, business rule extraction and engineering automation, including CATIA V5 integrations and support for the KBE team at Embraer.",
+    "summary": "Profile summary"
+  },
+  "experience": {
+    "eyebrow": "Experience",
+    "title": "Where I have built and maintained solutions.",
+    "technologies": "Technologies used"
+  },
+  "skills": {
+    "eyebrow": "Skills",
+    "title": "Technologies behind my experience."
+  },
+  "projects": {
+    "eyebrow": "Projects",
+    "title": "Ideas turned into projects.",
+    "lead": "Apps, games and websites. Explore the details or download the available APKs."
+  },
+  "education": {
+    "eyebrow": "Education",
+    "title": "Academic background and languages."
+  }
+}

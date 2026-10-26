@@ -1,0 +1,127 @@
+{
+  "items": {
+    "mdreader": {
+      "type": "App · Windows and Android",
+      "status": "APK available",
+      "description": "A Markdown reader for Windows and Android with raw text, a formatted preview and document reloading.",
+      "overview": "A C# reader for .md and .markdown files, with a shared core and Markdig for converting content to HTML. The Windows interface uses Windows Forms; the native Android interface provides document selection and reading on your phone.",
+      "features": [
+        "Open .md and .markdown files with native document pickers.",
+        "Raw text and formatted previews with headings, tables, lists and code blocks.",
+        "Reload documents after changes made in another editor.",
+        "A shared C# and Markdig core with dedicated interfaces for Windows and Android."
+      ],
+      "notes": "MDReader is a reader and does not change documents. The Android APK is published; the Windows version can be built as a portable executable using the repository instructions.",
+      "download": {
+        "requirements": "Android 8.0 or later",
+        "note": "Signed APK for MDReader Android version 1.0.0. Open Markdown files through your phone’s document picker."
+      }
+    },
+    "coloring-game": {
+      "type": "Game · Web and Android",
+      "status": "Android version in development",
+      "description": "Colorê: a free-painting journey through history, with characters, clothing and saved progress.",
+      "overview": "Colorê — O Caminho das Cores combines free painting with historical exploration. Players create a traveler, color illustrations from different eras and customize the character’s clothing. The web version offers 15 paths and 75 playable illustrations.",
+      "features": [
+        "Continuous-stroke painting with 12 tools, materials and freely chosen colors.",
+        "Undo, redo and erase paint while preserving the drawing outlines.",
+        "Customizable characters, paintable clothing and XP-based progression.",
+        "Painting collection, local saves and backups."
+      ],
+      "notes": "The web experience is implemented. The Android version has a native renderer and build configuration, but the README states that an APK has not yet been compiled or tested on a device.",
+      "preview": {
+        "alt": "Colorê painting editor with a work in progress and color tools",
+        "caption": "Screenshot of the web version from the project documentation."
+      }
+    },
+    "carrinho-de-compras": {
+      "type": "App · Android",
+      "status": "APK available",
+      "description": "Grocery lists, receipt scanning and purchase history with data stored on your phone.",
+      "overview": "A Portuguese-language app for planning grocery trips and tracking purchases. Shopping lists are kept separate from prices in receipt review and purchase history, with local SQLite storage and no account required.",
+      "features": [
+        "Create lists item by item, paste several items at once or repeat the previous month’s purchases.",
+        "Manage quantities, mark items as collected and undo deletions.",
+        "Look up São Paulo NFC-e receipts by QR code and recognize receipt photos locally.",
+        "Browse history by period, search by store or product and back up data."
+      ],
+      "notes": "The APK recommended in the README installs Carrinho Teste, which can run alongside the original app. Data stays on the device, and backups let you transfer it between installations.",
+      "download": {
+        "requirements": "Android 7.0 or later",
+        "note": "Installs as Carrinho Teste. The project recommends this version for testing without replacing the previous app."
+      },
+      "preview": {
+        "alt": "Carrinho de Compras screen showing grocery lists and item progress",
+        "caption": "App interface with fictional data, as shown in the documentation."
+      }
+    },
+    "nosso-casamento": {
+      "type": "App · Web and Android",
+      "status": "APK available",
+      "description": "Wedding planning with a budget, guests, tasks, vendors and a countdown.",
+      "overview": "A responsive dashboard for keeping wedding details in one place. The Android version packages the web experience with Capacitor and works offline, keeping records and the countdown on the device.",
+      "features": [
+        "Dashboard with a countdown, indicators and planning charts.",
+        "Budget with expenses, partial payments, available balance and due dates.",
+        "Guests and companions, attendance confirmations, a checklist and vendors.",
+        "Couple preferences, global search and JSON backup export/import."
+      ],
+      "notes": "Planning is local, without login or automatic synchronization between devices. The demo starts with fictional data and lets you start from scratch. The project’s reference date is July 24, 2027.",
+      "download": {
+        "requirements": "Android · demo version",
+        "note": "Includes sample data and works offline. The Android guide in the repository explains installation and storage."
+      },
+      "preview": {
+        "alt": "Nosso Casamento dashboard with a countdown, budget and next steps",
+        "caption": "Dashboard overview with the project’s sample data."
+      }
+    },
+    "projeto-van": {
+      "type": "App · Android",
+      "status": "APK available",
+      "description": "RotaCerta Escolar: school transport management with records, indicators, reports and backups.",
+      "overview": "An Android app for looking up children, guardians and schools and tracking school transport operations. RotaCerta uses .NET MAUI Blazor Hybrid with a Razor interface and a local SQLite database, including reports and sharing database copies between devices.",
+      "features": [
+        "Dashboard with indicators, distribution by school and route, and a summarized schedule.",
+        "Search, filters and detailed records for children, schools and guardians.",
+        "Simplified preregistration and Excel report exports.",
+        "Download, share, compare and import the local database."
+      ],
+      "notes": "A functional prototype with sample data and simplified preregistration. The schedule does not yet track attendance or boarding in real time. The app has no cloud synchronization.",
+      "download": {
+        "requirements": "Android 7.0 or later",
+        "note": "The app appears as RotaCerta on your phone. The first launch loads a sample database."
+      },
+      "preview": {
+        "alt": "RotaCerta Escolar dashboard with indicators and transport distribution by school",
+        "caption": "Prototype dashboard with its sample database."
+      }
+    },
+    "luiz-fernando-imobiliaria": {
+      "type": "Website · Property catalog",
+      "status": "In development",
+      "description": "A property portal for Vale do Paraíba and São Paulo’s North Coast, with filters and WhatsApp contact.",
+      "overview": "A website for showcasing properties and making it easier to contact the real estate agent. The catalog organizes houses, apartments and townhouses by region, with individual pages and a layout adapted to desktop and mobile.",
+      "features": [
+        "Search by neighborhood, city or property code.",
+        "Filter by city, property type, price and number of bedrooms, and sort results.",
+        "Individual property pages with photos, specifications and highlights.",
+        "WhatsApp contact with a message prepared for the selected property."
+      ],
+      "notes": "Website in development. The public repository does not yet contain code or a README; this summary describes the features found in the local version."
+    },
+    "ligia-rosa-atelier": {
+      "type": "Website · Handmade product catalog",
+      "status": "Functional prototype",
+      "description": "A hand-painted fabric catalog with collections, product variations and WhatsApp orders.",
+      "overview": "A responsive catalog designed to showcase handmade pieces and connect visitors with the seller. Built with Next.js and TypeScript, it presents collections and products and prepares an order message with the selected variations.",
+      "features": [
+        "Collections and products presented with photographs and descriptions.",
+        "Browse categories and select product variations.",
+        "Order messages prepared automatically for WhatsApp.",
+        "A responsive layout for browsing on mobile or desktop."
+      ],
+      "notes": "A functional prototype with sample prices and testimonials. Customer service takes place through WhatsApp; there is no cart, integrated payment or backend yet."
+    }
+  }
+}

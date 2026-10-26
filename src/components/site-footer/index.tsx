@@ -1,15 +1,21 @@
+"use client";
+
 import Link from "next/link";
+import { useI18n } from "@/i18n/use-i18n";
 import { ArrowUpRight, BriefcaseBusiness, Mail, Phone } from "lucide-react";
 import { contact } from "@/data/profile";
-import { routes } from "@/routes";
+import { getRoutes } from "@/routes";
 
 export function SiteFooter({ compact = false }: { compact?: boolean }) {
+  const { t, locale } = useI18n();
+  const routes = getRoutes(locale);
+
   if (compact) {
     return (
       <footer className="project-footer">
-        <p>Pedro Domiciano · Desenvolvedor Fullstack</p>
+        <p>{t("footer.signature")}</p>
         <Link href={routes.sections.contact}>
-          Vamos conversar <ArrowUpRight size={16} aria-hidden="true" />
+          {t("actions.talk")} <ArrowUpRight size={16} aria-hidden="true" />
         </Link>
       </footer>
     );
@@ -19,8 +25,8 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
     <footer className="footer" id="contato">
       <div className="section-inner footer-grid">
         <div>
-          <p className="eyebrow">Contato</p>
-          <h2>Vamos conversar sobre produto, APIs e automação.</h2>
+          <p className="eyebrow">{t("footer.label")}</p>
+          <h2>{t("footer.title")}</h2>
         </div>
 
         <div className="contact-list">
@@ -45,14 +51,14 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
             <span className="contact-placeholder">
               <BriefcaseBusiness size={18} aria-hidden="true" />
               <span>Fiverr</span>
-              <span className="contact-placeholder-label">Coming soon</span>
+              <span className="contact-placeholder-label">{t("footer.comingSoon")}</span>
             </span>
           )}
         </div>
       </div>
 
       <p className="copyright">
-        © {new Date().getFullYear()} Pedro Domiciano. Todos os direitos reservados.
+        {t("footer.copyright", { year: new Date().getFullYear() })}
       </p>
     </footer>
   );

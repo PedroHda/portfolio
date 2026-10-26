@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "title": "Pedro Domiciano | Full Stack Developer",
+    "description": "Portfolio of Pedro Domiciano, a full stack developer experienced in .NET, React, TypeScript, REST APIs and engineering automation."
+  },
+  "navigation": {
+    "label": "Main navigation",
+    "about": "About",
+    "experience": "Experience",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact",
+    "home": "Go to home",
+    "portfolio": "Pedro Domiciano’s portfolio",
+    "openMenu": "Open menu",
+    "menu": "Menu"
+  },
+  "language": {
+    "label": "Choose language"
+  },
+  "theme": {
+    "label": "Choose theme",
+    "light": "Light",
+    "dark": "Dark",
+    "useLight": "Use light theme",
+    "useDark": "Use dark theme"
+  },
+  "actions": {
+    "viewProjects": "View projects",
+    "viewDetails": "View details",
+    "viewProject": "View {{title}} details",
+    "downloadApk": "Download APK",
+    "downloadProject": "Download {{title}} APK",
+    "github": "View on GitHub",
+    "myGithub": "My GitHub",
+    "readReadme": "Read the full README",
+    "backToProjects": "Back to projects",
+    "allProjects": "All projects",
+    "nextProject": "Next project",
+    "talk": "Let’s talk"
+  },
+  "filters": {
+    "label": "Filter projects",
+    "all": "All",
+    "apps": "Apps",
+    "games": "Games",
+    "websites": "Websites",
+    "apk": "With APK",
+    "results_one": "{{count}} project shown. Filter: {{filter}}.",
+    "results_other": "{{count}} projects shown. Filter: {{filter}}."
+  },
+  "projects": {
+    "technologies": "Project technologies",
+    "technologiesFor": "Technologies used in {{title}}",
+    "overview": "The project in a minute",
+    "features": "What it does",
+    "status": "Current status",
+    "links": "Project links and download",
+    "more": "More projects",
+    "explore": "Explore the project",
+    "readmeNote": "Summary based on the README. Find usage instructions, setup and technical details in the repository."
+  },
+  "download": {
+    "title": "Try it on Android",
+    "version": "Version",
+    "file": "Download",
+    "size": "{{size}} MB",
+    "variants": {
+      "test": "Test",
+      "demo": "Demo"
+    },
+    "install": "How to install the APK",
+    "steps": [
+      "Download the file on your Android phone.",
+      "Open the APK in your Downloads folder.",
+      "If prompted, allow installation from the browser or file manager you used.",
+      "Finish the installation and open the app."
+    ]
+  },
+  "footer": {
+    "label": "Contact",
+    "title": "Let’s talk about products, APIs and automation.",
+    "signature": "Pedro Domiciano · Full Stack Developer",
+    "copyright": "© {{year}} Pedro Domiciano. All rights reserved.",
+    "comingSoon": "Coming soon"
+  }
+}

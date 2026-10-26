@@ -1,8 +1,8 @@
 # Portfólio Pedro Domiciano
 
-Portfólio em Next.js com TypeScript e exportação estática para o Netlify.
+Portfólio em Next.js com TypeScript, i18next e exportação estática para o Netlify.
 
-## Rodar localmente
+## Desenvolvimento
 
 Use Node.js 22 e npm 10:
 
@@ -11,124 +11,124 @@ npm ci
 npm run dev
 ```
 
-Abra `http://localhost:3000`.
+- Português brasileiro: http://localhost:3000/
+- Inglês: http://localhost:3000/en
 
-## Organização das pastas
+O seletor do cabeçalho mantém a página, os parâmetros da URL e a âncora ao mudar
+idioma. Os links internos preservam o idioma escolhido, inclusive após recarregar.
+O português é o idioma padrão; os endereços anteriores continuam disponíveis.
 
-O código editável da aplicação fica em `src/`, organizado por responsabilidade:
+## Organização
+
+Todo o código editável da aplicação fica em `src/`:
 
 ```text
 src/
-├── app/                         # Entrada do Next.js: rotas, metadados e documento HTML
-│   ├── layout.tsx               # Idioma, tema inicial e importação do CSS global
-│   ├── page.tsx                 # Conecta / à HomePage
-│   └── projetos/[slug]/page.tsx  # Conecta a URL à tela do projeto
-├── assets/
-│   ├── images/                  # Logos, fotos e capturas dos projetos
-│   └── index.ts                 # Importações das imagens usadas pela aplicação
-├── components/                  # Componentes reutilizáveis, uma pasta por componente
-│   ├── project-card/
-│   ├── project-icon/
-│   ├── project-list/
-│   ├── site-footer/
-│   ├── site-header/
-│   └── theme-toggle/
-├── data/
-│   ├── profile.ts               # Contato, experiência, formação e tecnologias
-│   └── projects.ts              # Projetos, resumos, imagens e downloads
+├── app/
+│   ├── (default)/        # Rotas em português: / e /projetos/[slug]
+│   └── [locale]/         # Rotas traduzidas: /en e /en/projetos/[slug]
+├── assets/images/        # Logos, fotos e capturas dos projetos
+├── components/           # Componentes compartilhados, incluindo seletor de idioma
+├── data/                 # Identidade, URLs, tecnologias e arquivos para download
+├── i18n/
+│   ├── config.ts         # Idiomas habilitados, fallback e prefixos de URL
+│   ├── resources.ts      # Registro dos catálogos, com validação de estrutura
+│   ├── locales/pt-BR/    # Traduções em português brasileiro
+│   ├── locales/en/       # Traduções em inglês
+│   ├── provider.tsx      # Instância i18next de cada documento
+│   ├── use-i18n.ts       # Hook de tradução e idioma atual
+│   ├── server.ts         # Tradução no build, com instâncias isoladas
+│   ├── content.ts        # Conteúdo e formatos localizados
+│   └── metadata.ts       # Títulos e descrições para buscadores
 ├── layouts/
-│   └── site-layout/             # Composição de cabeçalho + conteúdo + rodapé
-├── routes/
-│   └── index.ts                 # Endereços das páginas, seções e itens de navegação
-├── screens/                     # Telas completas, como as páginas de um projeto React
-│   ├── home/
-│   │   ├── index.tsx            # Monta a página inicial
-│   │   └── sections/            # Hero, sobre, experiência, skills, projetos e formação
-│   └── project-details/
-│       ├── index.tsx            # Monta a página de detalhes
-│       └── components/          # Componentes exclusivos dessa tela
-├── styles/
-│   └── globals.css              # Estilos, responsividade e temas
-└── types/
-    ├── profile.ts               # Tipos dos dados profissionais
-    └── project.ts               # Tipos de projeto, APK e imagem
+│   ├── document-layout/  # HTML, idioma, tema inicial, CSS e provider
+│   └── site-layout/      # Cabeçalho, conteúdo e rodapé
+├── routes/               # Endereços e navegação, considerando o idioma
+├── screens/
+│   ├── home/             # Página inicial e suas seções
+│   └── project-details/  # Detalhes e componentes exclusivos dessa tela
+├── styles/globals.css    # Estilos, temas e responsividade
+└── types/                # Tipos dos dados profissionais e dos projetos
 ```
 
-### Onde editar
+Cada componente e tela expõe seu componente em `index.tsx`. O alias `@/` aponta
+para `src/`. O Next.js conecta URLs às telas por arquivos pequenos em `src/app/`.
+O nome `screens` evita conflito com o Pages Router reservado do Next.js.
+Configurações permanecem na raiz; `public/` pode ser usado para arquivos com URL
+fixa. As imagens atuais são importadas de `src/assets/` durante o build.
+
+## Onde editar
 
 | Quero alterar | Local |
 | --- | --- |
-| Texto de apresentação ou seção da página inicial | `src/screens/home/sections/` |
-| Contato, experiência ou formação | `src/data/profile.ts` |
-| Descrição, tecnologias ou APK de um projeto | `src/data/projects.ts` |
+| Apresentação e textos das seções | `src/i18n/locales/{idioma}/home.json` |
+| Experiência, formação, skills e destaques | `src/i18n/locales/{idioma}/profile.json` |
+| Descrições, funcionalidades e notas dos projetos | `src/i18n/locales/{idioma}/projects.json` |
+| Botões, menu, acessibilidade e rótulos | `src/i18n/locales/{idioma}/common.json` |
+| Contato, LinkedIn e Fiverr | `src/data/profile.ts` |
+| Repositórios, tecnologias, imagens e APKs | `src/data/projects.ts` |
+| Estrutura da página inicial | `src/screens/home/sections/` |
 | Aparência da página de detalhes | `src/screens/project-details/` |
-| Card ou filtro de projetos | `src/components/project-card/` ou `project-list/` |
-| Menu ou rodapé | `src/components/site-header/` ou `site-footer/` |
-| Endereços e links de navegação | `src/routes/index.ts` |
+| Cards e filtros | `src/components/project-card/` e `project-list/` |
+| Menu, rodapé e seletor | `src/components/site-header/`, `site-footer/` e `language-switch/` |
 | Cores, temas e espaçamentos | `src/styles/globals.css` |
-| Fotos e logos | `src/assets/images/`, com importações em `src/assets/index.ts` |
 
-Cada componente e tela expõe seu componente em `index.tsx`, permitindo imports
-como `@/components/project-card` e `@/screens/home`. O alias `@/` aponta para `src/`.
-Componentes exclusivos de uma tela ficam junto dela; componentes compartilhados
-ficam em `src/components/`.
+O endereço do Fiverr fica em `contact.fiverr` e é compartilhado entre os idiomas.
+Quando vazio, o contato mostra o aviso traduzido de disponibilidade futura.
 
-O Fiverr aparece no contato como **Coming soon**. Para ativar o link, preencha
-`contact.fiverr` em `src/data/profile.ts` com o endereço do seu perfil. Enquanto o
-campo estiver vazio, o site exibe apenas o aviso.
+## Internacionalização
 
-### Rotas no Next.js
+São usados **i18next** e **react-i18next**, com quatro namespaces: `common`,
+`home`, `profile` e `projects`. Os JSONs contêm todo o texto traduzível,
+incluindo descrições dos projetos, acessibilidade, legendas, títulos e metadados.
+Nomes próprios, nomes dos produtos, URLs, tecnologias e arquivos são compartilhados.
+As categorias usam IDs estáveis para que os filtros funcionem em qualquer idioma.
+Pluralização é resolvida pelo i18next e números usam `Intl.NumberFormat`.
 
-`src/routes/index.ts` centraliza os endereços usados na interface. O Next.js
-reconhece as rotas pelos arquivos `page.tsx` de `src/app/`, que conectam esses
-endereços às telas de `src/screens/`. Ao adicionar uma nova página, crie sua tela,
-o arquivo de entrada correspondente em `src/app/` e seu endereço em `src/routes/`.
+As páginas são geradas em HTML no idioma correspondente. Cada documento tem
+`lang` próprio e sua instância de tradução, evitando mistura de idiomas no build.
+A configuração usa PT-BR como fallback e não depende de middleware ou servidor.
 
-O nome `screens` evita conflito com `pages`, que é reservado ao Pages Router do
-Next.js. Esta aplicação continua usando o App Router e exportação estática.
+Para adicionar um idioma futuramente:
 
-As configurações (`package.json`, `tsconfig.json`, `next.config.ts` e
-`netlify.toml`) ficam na raiz. Se necessário, `public/` também fica na raiz para
-arquivos que precisem de uma URL fixa. As imagens atuais são importadas de
-`src/assets/` e incluídas automaticamente no build.
+1. Copie os quatro JSONs para uma nova pasta em `src/i18n/locales/` e traduza os
+   valores, preservando as chaves e variáveis como `{{title}}` e `{{count}}`.
+2. Cadastre o idioma em `localeDefinitions` de `src/i18n/config.ts`, com nome,
+   rótulo curto, prefixo da URL, locale Open Graph e direção do texto.
+3. Importe e registre os quatro catálogos em `src/i18n/resources.ts`.
+4. Execute os testes e o build. O seletor e as rotas estáticas serão derivados
+   do registro, sem criar novas telas ou duplicar componentes.
 
-## Projetos
+Somente PT-BR e inglês estão cadastrados atualmente.
 
-A seção de projetos apresenta cards curtos com filtros por categoria e por APK
-disponível. Cada card abre uma página em `/projetos/[slug]`, com resumo do README,
-principais funcionalidades, tecnologias, estado atual e links para o GitHub.
+## Projetos e downloads
 
-Os sete projetos estão centralizados em `src/data/projects.ts`. Para atualizar um
-projeto, edite seu resumo e os links após conferir o README e os arquivos publicados.
-As páginas são geradas durante o build, sem depender da API do GitHub em cada visita.
+Os cards abrem páginas individuais com resumos dos READMEs. Os textos ficam nos
+catálogos; os dados e links permanecem em `src/data/projects.ts`.
 
-### Downloads diretos
+Downloads diretos publicados no GitHub:
 
-Os botões apontam para o arquivo APK, sem passar pela página do GitHub:
+- **MDReader:** APK Android 1.0.0, Android 8.0+, release `android-v1.0.0`.
+- **Carrinho de Compras:** APK Carrinho Teste 1.1.0, recomendado pelo README.
+- **Nosso Casamento:** APK de demonstração 1.0.0.
+- **Projeto Van / RotaCerta:** `apks/VansEscola.apk`, versão 1.0.4.
 
-- **Carrinho de Compras:** release 1.1.0, instalador Carrinho Teste recomendado no README.
-- **Nosso Casamento:** APK de demonstração 1.0.0 no repositório.
-- **Projeto Van / RotaCerta:** `apks/VansEscola.apk` no repositório.
+Para atualizar um instalador, altere sua URL direta, nome de arquivo, versão e
+`sizeMB` nos dados; atualize os requisitos e notas em ambos os catálogos de projetos.
+Os APKs continuam hospedados no GitHub e são os mesmos para todos os idiomas.
+O ColoringGame ainda não possui APK publicado. O resumo da imobiliária se baseia
+na versão local, pois seu repositório público ainda está vazio.
 
-Os arquivos continuam hospedados no GitHub. Não é necessário copiar os APKs para o
-portfólio. Para adicionar um download, preencha `download` com a URL direta, nome do
-arquivo, versão, tamanho, requisitos e observação. Cadastre somente arquivos
-publicados e acessíveis, preferindo a versão recomendada pelo README.
-
-MDReader e ColoringGame ainda não possuem instaladores publicados. O repositório
-público de Luiz Fernando Imobiliária está vazio; seu resumo foi baseado no código
-local, com essa condição indicada na página. Os demais resumos foram conferidos nos
-READMEs públicos em 24/10/2026.
-
-As imagens de demonstração em `src/assets/images/projects/` vêm da documentação dos
-próprios projetos.
-
-## Verificar e gerar o site
+## Verificações e publicação
 
 ```bash
+npm run test:i18n
 npm run typecheck
 npm run build
+npm run check:export
 ```
 
-O build gera a página inicial e as sete páginas de projeto em `out/`. A configuração
-existente em `netlify.toml` publica essa pasta.
+Os testes verificam catálogos, interpolação, pluralização, fallback e troca de URLs.
+A verificação de exportação valida idiomas, metadados, referências internas,
+links dos APKs e a navegação das páginas geradas. O build produz `out/`, que já
+é a pasta publicada pela configuração existente em `netlify.toml`.

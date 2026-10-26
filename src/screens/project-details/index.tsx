@@ -1,24 +1,31 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { ProjectIcon } from "@/components/project-icon";
 import { SiteLayout } from "@/layouts/site-layout";
-import { routes } from "@/routes";
-import type { Project } from "@/types/project";
+import { getRoutes } from "@/routes";
+import type { ProjectDefinition } from "@/types/project";
+import { localizeProject } from "@/i18n/content";
+import { useI18n } from "@/i18n/use-i18n";
 import { ProjectSidebar } from "./components/project-sidebar";
 
-type ProjectDetailsPageProps = { project: Project; nextProject: Project };
+type ProjectDetailsPageProps = { project: ProjectDefinition; nextProject: ProjectDefinition };
 
 export function ProjectDetailsPage({
-  project,
+  project: definition,
   nextProject,
 }: ProjectDetailsPageProps) {
+  const { t, locale } = useI18n();
+  const project = localizeProject(definition, t, locale);
+  const routes = getRoutes(locale);
   return (
     <SiteLayout variant="project">
       <main className={`project-page project-${project.slug}`} id="conteudo">
         <div className="section-inner">
           <Link className="back-link" href={routes.sections.projects}>
-            <ArrowLeft size={17} aria-hidden="true" /> Voltar aos projetos
+            <ArrowLeft size={17} aria-hidden="true" /> {t("actions.backToProjects")}
           </Link>
 
           <div className="project-detail-header">
@@ -28,7 +35,7 @@ export function ProjectDetailsPage({
             <p className="eyebrow">{project.type}</p>
             <h1>{project.title}</h1>
             <p className="project-detail-lead">{project.description}</p>
-            <div className="tag-row" aria-label="Tecnologias do projeto">
+            <div className="tag-row" aria-label={t("projects.technologies")}>
               {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
             </div>
           </div>
@@ -36,12 +43,12 @@ export function ProjectDetailsPage({
           <div className="project-detail-layout">
             <div className="project-detail-content">
               <section className="project-detail-section" aria-labelledby="overview-title">
-                <h2 id="overview-title">O projeto em um minuto</h2>
+                <h2 id="overview-title">{t("projects.overview")}</h2>
                 <p>{project.overview}</p>
               </section>
 
               <section className="project-detail-section" aria-labelledby="features-title">
-                <h2 id="features-title">O que ele faz</h2>
+                <h2 id="features-title">{t("projects.features")}</h2>
                 <ul className="project-feature-list">
                   {project.features.map((feature) => (
                     <li key={feature}>
@@ -68,7 +75,7 @@ export function ProjectDetailsPage({
               )}
 
               <section className="project-detail-section" aria-labelledby="status-title">
-                <h2 id="status-title">Estado atual</h2>
+                <h2 id="status-title">{t("projects.status")}</h2>
                 <p>{project.notes}</p>
               </section>
             </div>
@@ -76,10 +83,10 @@ export function ProjectDetailsPage({
             <ProjectSidebar project={project} />
           </div>
 
-          <nav className="project-pagination" aria-label="Mais projetos">
-            <Link href={routes.sections.projects}><ArrowLeft size={18} aria-hidden="true" /> Todos os projetos</Link>
+          <nav className="project-pagination" aria-label={t("projects.more")}>
+            <Link href={routes.sections.projects}><ArrowLeft size={18} aria-hidden="true" /> {t("actions.allProjects")}</Link>
             <Link href={routes.projectDetails(nextProject.slug)}>
-              <span><small>Próximo projeto</small>{nextProject.title}</span>
+              <span><small>{t("actions.nextProject")}</small>{nextProject.title}</span>
               <ArrowRight size={20} aria-hidden="true" />
             </Link>
           </nav>

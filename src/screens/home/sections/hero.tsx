@@ -1,28 +1,30 @@
+"use client";
+
 import Image from "next/image";
+import { useI18n } from "@/i18n/use-i18n";
 import { ArrowUpRight, BriefcaseBusiness, MapPin, TerminalSquare } from "lucide-react";
 import { images } from "@/assets";
 import { contact, metrics } from "@/data/profile";
-import { routes } from "@/routes";
+import { getRoutes } from "@/routes";
 
 export function HeroSection() {
+  const { t, locale } = useI18n();
+  const routes = getRoutes(locale);
+
   return (
     <section className="hero" id="inicio" aria-labelledby="hero-title">
       <div className="section-inner hero-grid">
         <div className="hero-copy">
-          <p className="eyebrow">Desenvolvedor Fullstack</p>
+          <p className="eyebrow">{t("home:hero.eyebrow")}</p>
           <h1 id="hero-title">
-            Soluções web, APIs e automação com foco em engenharia.
+            {t("home:hero.title")}
           </h1>
-          <p className="hero-lead">
-            Sou Pedro Domiciano. Trabalho com React, TypeScript, C#, .NET e
-            bancos SQL para transformar regras de negócio em produtos,
-            integrações e ferramentas confiáveis.
-          </p>
+          <p className="hero-lead">{t("home:hero.lead")}</p>
 
-          <div className="hero-actions" aria-label="Ações principais">
+          <div className="hero-actions" aria-label={t("home:hero.actions")}>
             <a className="button button-primary" href={routes.sections.projects}>
               <TerminalSquare size={18} />
-              Ver projetos
+              {t("actions.viewProjects")}
             </a>
             <a
               className="button button-secondary"
@@ -35,19 +37,19 @@ export function HeroSection() {
             </a>
           </div>
 
-          <div className="hero-meta" aria-label="Informações rápidas">
+          <div className="hero-meta" aria-label={t("home:hero.information")}>
             <span>
               <MapPin size={17} />
               {contact.location}
             </span>
             <span>
               <BriefcaseBusiness size={17} />
-              .NET, React e APIs
+              {t("home:hero.stack")}
             </span>
           </div>
         </div>
 
-        <div className="hero-visual" aria-label="Resumo visual do perfil">
+        <div className="hero-visual" aria-label={t("home:hero.visual")}>
           <Image
             src={images.heroBackground}
             alt=""
@@ -58,21 +60,21 @@ export function HeroSection() {
           />
           <div className="hero-visual-overlay" />
           <div className="status-card status-card-top">
-            <span>stack atual</span>
+            <span>{t("home:hero.currentStack")}</span>
             <strong>React · .NET · SQL</strong>
           </div>
           <div className="status-card status-card-bottom">
-            <span>foco</span>
-            <strong>APIs, automação e legado</strong>
+            <span>{t("home:hero.focus")}</span>
+            <strong>{t("home:hero.focusValue")}</strong>
           </div>
         </div>
       </div>
 
       <div className="section-inner metrics-strip">
         {metrics.map((metric) => (
-          <div className="metric-item" key={metric.label}>
+          <div className="metric-item" key={metric.id}>
             <strong>{metric.value}</strong>
-            <span>{metric.label}</span>
+            <span>{t(`profile:metrics.${metric.id}`)}</span>
           </div>
         ))}
       </div>

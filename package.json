@@ -7,17 +7,21 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:i18n": "node --experimental-strip-types --test tests/i18n.test.mjs",
+    "check:export": "node --experimental-strip-types scripts/check-localized-export.mjs"
   },
   "engines": {
     "node": ">=22 <23",
     "npm": ">=10 <11"
   },
   "dependencies": {
+    "i18next": "26.5.11",
     "lucide-react": "1.17.0",
     "next": "16.2.9",
     "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "react-dom": "19.2.7",
+    "react-i18next": "17.1.9"
   },
   "devDependencies": {
     "@types/node": "25.9.3",
