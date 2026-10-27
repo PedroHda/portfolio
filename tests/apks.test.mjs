@@ -113,7 +113,7 @@ test("refuses partial lookups, rate limits and truncated trees instead of return
   }
 });
 
-test("reuses background lookups but rechecks on every download and never reuses a stale file after failure", async () => {
+test("reuses background lookups but refreshes on demand and never reuses a stale file after failure", async () => {
   let version = "1.0.0";
   let requests = 0;
   let fail = false;
@@ -132,4 +132,37 @@ test("reuses background lookups but rechecks on every download and never reuses 
   fail = false;
   version = "3.0.0";
   assert.equal((await load("PedroHda", "Example", {}, true)).version, "3.0.0");
+});
+
+test("revalidates expired lookups when returning to the page and shares concurrent checks", async (t) => {
+  let now = 0;
+  t.mock.method(Date, "now", () => now);
+  let requests = 0;
+  let version = "1.0.0";
+  let fail = false;
+  const load = createApkLoader(async () => {
+    requests++;
+    if (fail) throw new Error("offline");
+    return file(version);
+  });
+
+  await load("PedroHda", "Example", {});
+  version = "2.0.0";
+  now = 5 * 60_000 - 1;
+  assert.equal((await load("PedroHda", "Example", {})).version, "1.0.0");
+  assert.equal(requests, 1);
+
+  now++;
+  const results = await Promise.all([
+    load("PedroHda", "Example", {}), load("PedroHda", "Example", {}),
+  ]);
+  assert.ok(results.every((apk) => apk.version === "2.0.0"));
+  assert.equal(requests, 2);
+
+  now += 5 * 60_000;
+  fail = true;
+  await assert.rejects(load("PedroHda", "Example", {}));
+  fail = false;
+  version = "3.0.0";
+  assert.equal((await load("PedroHda", "Example", {})).version, "3.0.0");
 });

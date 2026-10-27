@@ -31,15 +31,30 @@ export function ApkDownloadsProvider({ projects, children }: { projects: Project
 
   useEffect(() => {
     let active = true;
-    for (const project of projects) {
-      if (!project.apkSource) continue;
-      void load(githubOwner, project.repository, project.apkSource).then((file) => {
-        if (active) setStates((current) => ({ ...current, [project.repository]: { status: file ? "ready" : "missing", file: file ?? undefined } }));
-      }).catch(() => {
-        if (active) setStates((current) => ({ ...current, [project.repository]: { status: "error" } }));
-      });
+    function checkApks() {
+      if (document.visibilityState === "hidden") return;
+      for (const project of projects) {
+        if (!project.apkSource) continue;
+        void load(githubOwner, project.repository, project.apkSource).then((file) => {
+          if (active) setStates((current) => ({ ...current, [project.repository]: { status: file ? "ready" : "missing", file: file ?? undefined } }));
+        }).catch(() => {
+          if (active) setStates((current) => ({ ...current, [project.repository]: { status: "error" } }));
+        });
+      }
     }
-    return () => { active = false; };
+    // Revalidate away from the download click, respecting the shared five-minute cache.
+    checkApks();
+    window.addEventListener("focus", checkApks);
+    window.addEventListener("pageshow", checkApks);
+    window.addEventListener("online", checkApks);
+    document.addEventListener("visibilitychange", checkApks);
+    return () => {
+      active = false;
+      window.removeEventListener("focus", checkApks);
+      window.removeEventListener("pageshow", checkApks);
+      window.removeEventListener("online", checkApks);
+      document.removeEventListener("visibilitychange", checkApks);
+    };
   }, [projects]);
 
   const value = useMemo(() => ({ states, refresh }), [states, refresh]);

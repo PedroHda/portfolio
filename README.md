@@ -127,10 +127,13 @@ sem token no navegador e sem precisar publicar novamente o portfólio:
 5. Nome, versão, tamanho, disponibilidade nos cards e o filtro **Com APK** usam o
    resultado da consulta. O ColoringGame passa a exibir o download quando receber
    seu primeiro APK, pois também tem `apkSource` cadastrado.
-6. Consultas de exibição são compartilhadas por cinco minutos na aba. **Cada clique
-   em baixar consulta novamente** antes de abrir o arquivo mais recente. Em caso
-   de falha de rede, limite da API ou consulta incompleta, há um aviso e opção de
-   tentar novamente; uma URL antiga não é usada como alternativa silenciosa.
+6. Consultas de exibição são compartilhadas por cinco minutos na aba. Ao abrir a
+   página, voltar para a aba ou recuperar a conexão, a consulta é atualizada quando
+   o cache expira. **O botão usa um link direto para o APK exibido**, preservando o
+   clique nativo e o gerenciamento de downloads do Chrome no Android, sem aguardar
+   uma consulta ou redirecionar por JavaScript. Em caso de falha de rede, limite da
+   API ou consulta incompleta, há um aviso e opção de tentar novamente; o link fica
+   indisponível após a falha até que uma consulta seja concluída com sucesso.
 
 Para publicar uma atualização: envie o APK com o novo número da versão para uma
 release pública ou faça commit na branch padrão do próprio projeto. APKs locais,
