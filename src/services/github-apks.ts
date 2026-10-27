@@ -61,8 +61,12 @@ function variantOf(name: string): ApkVariant | undefined {
   if (/(?:^|[-_.])demo(?:[-_.]|$)/i.test(name)) return "demo";
 }
 
+function matchesVariant(variant: ApkVariant | undefined, source: ApkSource): boolean {
+  return !source.variant || (variant ?? "standard") === source.variant;
+}
+
 export function selectLatestApk(files: ApkFile[], source: ApkSource = {}): ApkFile | null {
-  return [...files].sort((a, b) => {
+  return files.filter((file) => matchesVariant(file.variant, source)).sort((a, b) => {
     // A new version wins even if an older file was uploaded again more recently.
     if (a.version && b.version) {
       const delta = compareVersions(b.version, a.version);
@@ -135,7 +139,8 @@ export async function discoverLatestApk(
     const tree: Tree = await response.json();
     if (tree.truncated) throw new Error("GitHub returned an incomplete APK tree");
     const entries = tree.tree.filter((entry) => entry.type === "blob"
-      && /^100(?:644|755)$/.test(entry.mode) && /\.apk$/i.test(entry.path));
+      && /^100(?:644|755)$/.test(entry.mode) && /\.apk$/i.test(entry.path)
+      && matchesVariant(variantOf(entry.path.split("/").at(-1)!), source));
 
     // Only compare history for the highest version (or every unversioned APK).
     const versions = entries.map((entry) => apkVersion(entry.path.split("/").at(-1)!)).filter((v) => v !== undefined);

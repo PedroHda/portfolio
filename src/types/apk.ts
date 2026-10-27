@@ -1,6 +1,7 @@
 export type ApkVariant = "test" | "demo";
 
 export type ApkSource = {
+  variant?: "standard" | ApkVariant;
   preferredVariant?: ApkVariant;
 };
 

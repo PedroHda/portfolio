@@ -49,10 +49,10 @@
         "Look up São Paulo NFC-e receipts by QR code and recognize receipt photos locally.",
         "Browse history by period, search by store or product and back up data."
       ],
-      "notes": "The APK recommended in the README installs Carrinho Teste, which can run alongside the original app. Data stays on the device, and backups let you transfer it between installations.",
+      "notes": "The download installs the original Carrinho de Compras app. Data stays on the device and can be exported and restored through backups.",
       "download": {
         "requirements": "Android 7.0 or later",
-        "note": "When available for the same version, Carrinho Teste is preferred and can run alongside the original app. Use backups to transfer your data."
+        "note": "Installer for the original app. Create a backup in Settings before updating or reinstalling."
       },
       "preview": {
         "alt": "Carrinho de Compras screen showing grocery lists and item progress",

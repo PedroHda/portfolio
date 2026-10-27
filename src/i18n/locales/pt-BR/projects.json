@@ -49,10 +49,10 @@
         "Consulta de NFC-e de São Paulo por QR code e reconhecimento local de fotos de notas.",
         "Histórico por período, busca por mercado ou produto e backup dos dados."
       ],
-      "notes": "O APK recomendado no README instala o Carrinho Teste, que pode coexistir com o aplicativo original. Os dados ficam no aparelho; a transferência entre instalações é feita por backup.",
+      "notes": "O download instala o aplicativo original Carrinho de Compras. Os dados ficam no aparelho e podem ser exportados e restaurados por backup.",
       "download": {
         "requirements": "Android 7.0 ou superior",
-        "note": "Quando disponível na mesma versão, é priorizado o Carrinho Teste, que pode coexistir com o aplicativo original. Use backups para transferir seus dados."
+        "note": "Instalador do aplicativo original. Faça backup em Ajustes antes de atualizar ou reinstalar."
       },
       "preview": {
         "alt": "Tela do Carrinho de Compras com listas de supermercado e progresso dos itens",

@@ -121,8 +121,10 @@ sem token no navegador e sem precisar publicar novamente o portfólio:
    uma versão antiga não a torna mais recente. Para arquivos de release sem versão
    no nome, a versão é extraída da tag; arquivos sem nenhuma versão reconhecível
    são usados quando não há candidato versionado, pela data da alteração.
-4. Na mesma versão, `preferredVariant` mantém a preferência pelo Carrinho Teste
-   e pela demonstração do Nosso Casamento. Data de publicação/alteração desempata.
+4. O Carrinho de Compras usa `variant: "standard"` para selecionar somente o APK
+   normal, excluindo builds de teste e demonstração, mesmo que tenham versão ou
+   data mais recente. No Nosso Casamento, `preferredVariant` mantém a preferência
+   pela demonstração na mesma versão. Data de publicação/alteração desempata.
    O download de arquivos do repositório usa o commit do arquivo selecionado.
 5. Nome, versão, tamanho, disponibilidade nos cards e o filtro **Com APK** usam o
    resultado da consulta. O ColoringGame passa a exibir o download quando receber

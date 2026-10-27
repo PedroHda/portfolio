@@ -75,6 +75,38 @@ test("discovers new release filenames and includes public prereleases", async ()
   assert.equal(apk.sizeBytes, 1_234_567);
 });
 
+test("standard APK selection excludes test and demo builds regardless of version or publication date", () => {
+  const standard = file("1.2.0");
+  const variants = [
+    file("1.2.0", { variant: "test", publishedAt: "2026-10-27T00:28:59Z" }),
+    file("2.0.0", { variant: "test" }), file("3.0.0", { variant: "demo" }),
+  ];
+  assert.equal(selectLatestApk([...variants, standard], { variant: "standard" }), standard);
+  assert.equal(selectLatestApk(variants, { variant: "standard" }), null);
+});
+
+test("discovers the original release APK when test filenames put teste before or after the version", async () => {
+  const { fetcher } = github({ releases: [
+    release("1.2.0", ["carrinho-de-compras-1.2.0.apk", "carrinho-de-compras-teste-1.2.0.apk"]),
+    release("1.3.0", ["carrinho-de-compras-1.3.0-teste.apk"]),
+    release("2.0.0", ["carrinho-de-compras-2.0.0-demo.apk"]),
+  ] });
+  const apk = await discoverLatestApk("PedroHda", "Example", { variant: "standard" }, fetcher);
+  assert.equal(apk.filename, "carrinho-de-compras-1.2.0.apk");
+  assert.equal(apk.variant, undefined);
+  assert.equal(apk.version, "1.2.0");
+});
+
+test("a newer repository test build does not hide the latest original APK", async () => {
+  const { fetcher, calls } = github({ releases: [release("1.1.0")], tree: [
+    entry("Example-1.2.0.apk"), entry("Example-teste-2.0.0.apk"), entry("Example-3.0.0-demo.apk"),
+  ] });
+  const apk = await discoverLatestApk("PedroHda", "Example", { variant: "standard" }, fetcher);
+  assert.equal(apk.filename, "Example-1.2.0.apk");
+  assert.equal(apk.source, "repository");
+  assert.equal(calls.filter((url) => url.includes("/commits?")).length, 1);
+});
+
 test("discovers higher-version APKs in any repository folder and uses their own commit", async () => {
   const { fetcher, calls } = github({ releases: [release("1.0.0")], tree: [
     entry("Example-1.9.0.apk"), entry("Example-1.10.0.apk"), entry("notes.md"),

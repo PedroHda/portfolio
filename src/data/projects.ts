@@ -55,7 +55,7 @@ export const projects: ProjectDefinition[] = [
       "Android"
     ],
     "readmeAvailable": true,
-    "apkSource": { "preferredVariant": "test" },
+    "apkSource": { "variant": "standard" },
     "preview": {
       "src": images.projects.shoppingCart,
       "width": 430,
