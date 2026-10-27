@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit",
     "test:i18n": "node --experimental-strip-types --test tests/i18n.test.mjs",
     "check:export": "node --experimental-strip-types scripts/check-localized-export.mjs",
-    "test:apks": "node --experimental-strip-types --test tests/apks.test.mjs"
+    "test:apks": "node --experimental-strip-types --test tests/apks.test.mjs tests/apk-download.test.mjs"
   },
   "engines": {
     "node": ">=22 <23",

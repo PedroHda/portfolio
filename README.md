@@ -148,10 +148,13 @@ mesmo comando pode atualizar o catálogo local, sem editar versões ou URLs à m
 O Carrinho de Compras também tem uma rota estável própria:
 **`/downloads/carrinho-de-compras.apk`**. O botão nativo dessa aplicação funciona
 mesmo antes da consulta de metadados ou se a API do GitHub estiver limitada. A rota
-está em `netlify.toml` e responde com redirecionamento 302 para o arquivo canônico
-normal da release mais recente, sem abrir uma página do GitHub. O servidor de
-arquivos entrega o APK como anexo; não há download por `fetch` nem abertura de
-outra aba. Versão e tamanho são consultados em segundo plano usando somente o asset
+está em `netlify.toml` e é atendida por `netlify/edge-functions/download-apk.js`.
+A função segue os redirecionamentos do GitHub no servidor e transmite o APK como
+anexo no próprio domínio do portfólio, sem carregar o arquivo inteiro na memória.
+O navegador recebe uma resposta 200 ou 206 com o tipo Android correto, nome do
+arquivo, tamanho e suporte à retomada por `Range`, sem um cabeçalho `Location`
+externo. O download continua sendo um link nativo, sem `fetch` no navegador nem
+abertura de outra aba. Versão e tamanho são consultados em segundo plano usando somente o asset
 `carrinho-de-compras.apk` da mesma release estável (`releases/latest`), para manter
 os metadados alinhados ao arquivo baixado.
 

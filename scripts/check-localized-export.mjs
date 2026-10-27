@@ -15,6 +15,11 @@ const redirects = [...netlifyConfig.matchAll(/\[\[redirects\]\]([\s\S]*?)(?=\n\[
     to: match[1].match(/^\s*to\s*=\s*"([^"]+)"/m)?.[1],
     status: Number(match[1].match(/^\s*status\s*=\s*(\d+)/m)?.[1]),
   }));
+const edgeFunctions = [...netlifyConfig.matchAll(/\[\[edge_functions\]\]([\s\S]*?)(?=\n\[|$)/g)]
+  .map((match) => ({
+    path: match[1].match(/^\s*path\s*=\s*"([^"]+)"/m)?.[1],
+    function: match[1].match(/^\s*function\s*=\s*"([^"]+)"/m)?.[1],
+  }));
 const cartDownload = "/downloads/carrinho-de-compras.apk";
 const downloadLinks = {
   mdreader: publishedApks.MDReader.href,
@@ -22,9 +27,11 @@ const downloadLinks = {
   "nosso-casamento": publishedApks.NossoCasamento.href,
   "projeto-van": publishedApks.ProjetoVan.href,
 };
-assert.ok(redirects.some((redirect) => redirect.from === cartDownload && redirect.status === 302
-  && redirect.to === "https://github.com/PedroHda/CarrinhoDeCompras/releases/latest/download/carrinho-de-compras.apk"),
-"Carrinho must redirect directly to the canonical normal APK, not a GitHub page");
+assert.ok(edgeFunctions.some((entry) => entry.path === cartDownload && entry.function === "download-apk"),
+  "Carrinho must stream the APK on the portfolio domain");
+assert.ok(existsSync("netlify/edge-functions/download-apk.js"), "Missing APK download handler");
+assert.ok(!redirects.some((redirect) => redirect.from === cartDownload),
+  "Carrinho must not redirect the browser to GitHub");
 
 const originalHome = readFileSync(path.join(root, "index.html"), "utf8");
 const fiverrUrl = originalHome.match(/href="([^"]*fiverr\.com[^\"]*)"/)?.[1];
@@ -67,6 +74,7 @@ for (const locale of supportedLocales) {
       if (!url || url.startsWith("//")) continue;
       const target = path.join(root, url);
       assert.ok(redirects.some((redirect) => redirect.from === url)
+        || edgeFunctions.some((entry) => entry.path === url)
         || [target, `${target}.html`, path.join(target, "index.html")].some((candidate) => existsSync(candidate) && statSync(candidate).isFile()), `Broken reference ${url} on ${route}`);
       if (raw.startsWith("/#") && locale !== defaultLocale) assert.fail(`Default-language navigation link on ${route}: ${raw}`);
       checkedReferences++;
