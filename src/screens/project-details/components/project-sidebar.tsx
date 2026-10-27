@@ -5,34 +5,33 @@ import { useI18n } from "@/i18n/use-i18n";
 import { readmeUrl, repositoryUrl } from "@/data/projects";
 import { translateList } from "@/i18n/content";
 import type { Project } from "@/types/project";
+import { ApkDownloadButton } from "@/components/apk-download-button";
+import { useProjectApk } from "@/components/apk-downloads";
 
 export function ProjectSidebar({ project }: { project: Project }) {
   const { t } = useI18n();
+  const { state } = useProjectApk(project);
+  const downloadKey = `projects:items.${project.slug}.download`;
 
   return (
     <aside className="project-sidebar" aria-label={t("projects.links")}>
-      {project.download && (
+      {project.apkSource && (
         <section className="project-download-panel" aria-labelledby="download-title">
           <span className="download-panel-icon"><Download size={22} aria-hidden="true" /></span>
           <h2 id="download-title">{t("download.title")}</h2>
-          <p>{project.download.requirements}</p>
-          <dl className="download-info">
+          <p>{project.download?.requirements ?? t(`${downloadKey}.requirements`)}</p>
+          {project.download && <dl className="download-info">
             <div><dt>{t("download.version")}</dt><dd>{project.download.displayVersion}</dd></div>
             <div><dt>{t("download.file")}</dt><dd>{project.download.size} · APK</dd></div>
-          </dl>
-          <a
-            className="button button-primary"
-            href={project.download.href}
-            download={project.download.filename}
-            aria-label={t("actions.downloadProject", { title: project.title })}
-          >
-            <Download size={18} aria-hidden="true" /> {t("actions.downloadApk")}
-          </a>
-          <p className="download-note">{project.download.note}</p>
-          <details className="install-guide">
+            <div><dt>{t("download.filename")}</dt><dd>{project.download.filename}</dd></div>
+          </dl>}
+          {state.status === "missing" && <p className="download-note" role="status">{t("download.notPublished")}</p>}
+          <ApkDownloadButton project={project} />
+          {project.download && <p className="download-note">{project.download.note}</p>}
+          {project.download && <details className="install-guide">
             <summary>{t("download.install")}</summary>
             <ol>{translateList(t, "download.steps").map((step) => <li key={step}>{step}</li>)}</ol>
-          </details>
+          </details>}
         </section>
       )}
 

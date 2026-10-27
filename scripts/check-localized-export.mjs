@@ -24,7 +24,7 @@ for (const locale of supportedLocales) {
     assert.ok(html.includes(`lang="${locale}"`), `Wrong document language: ${route}`);
     assert.ok(body.includes(common.language.label), `Wrong language selector label: ${route}`);
     if (!slug || projectMessages[slug].download) {
-      assert.ok(body.includes(common.actions.downloadApk), `Missing translated download button: ${route}`);
+      assert.ok(body.includes(common.download.checking), `Missing translated APK lookup state: ${route}`);
     }
     assert.doesNotMatch(body, /(?:home|profile|projects):(?:hero|items|experiences|education)\./, route);
     if (slug) {
@@ -44,10 +44,9 @@ for (const locale of supportedLocales) {
       checkedReferences++;
     }
     if (slug === "mdreader") {
-      assert.ok(body.includes("https://github.com/PedroHda/MDReader/releases/download/android-v1.0.0/MDReader.apk"));
-      assert.ok(body.includes("download=\"MDReader.apk\""));
       assert.ok(body.includes(projectMessages.mdreader.download.requirements));
-      assert.ok(body.includes(locale === "en" ? "62.6 MB" : "62,6 MB"));
+      assert.ok(body.includes(common.download.checking));
+      assert.ok(!body.includes("releases/download/android-v1.0.0/MDReader.apk"), "Static HTML must not pin an old APK");
     }
     checkedPages++;
   }

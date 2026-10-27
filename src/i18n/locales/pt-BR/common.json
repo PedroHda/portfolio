@@ -75,7 +75,19 @@
       "Abra o APK na pasta Downloads.",
       "Se solicitado, autorize a instalação para o navegador ou gerenciador de arquivos usado.",
       "Conclua a instalação e abra o aplicativo."
-    ]
+    ],
+    "filename": "Arquivo",
+    "latest": "Mais recente",
+    "prerelease": "Pré-lançamento",
+    "available": "APK disponível",
+    "checking": "Verificando APK…",
+    "checkingProject": "Verificando APK de {{title}}",
+    "retry": "Tentar novamente",
+    "retryProject": "Tentar verificar APK de {{title}} novamente",
+    "error": "Não foi possível consultar o APK mais recente.",
+    "unavailable": "Consulta do APK indisponível",
+    "notPublished": "Nenhum APK publicado por enquanto.",
+    "noResults": "Nenhum APK encontrado. Se houve uma falha na consulta, tente novamente no card do projeto."
   },
   "footer": {
     "label": "Contato",

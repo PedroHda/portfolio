@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useI18n } from "@/i18n/use-i18n";
-import { ArrowUpRight, Download } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { ApkDownloadButton } from "@/components/apk-download-button";
 import { ProjectIcon } from "@/components/project-icon";
 import { getRoutes } from "@/routes";
 import type { Project } from "@/types/project";
@@ -41,16 +42,7 @@ export function ProjectCard({ project }: { project: Project }) {
         >
           {t("actions.viewDetails")} <ArrowUpRight size={17} aria-hidden="true" />
         </Link>
-        {project.download && (
-          <a
-            className="project-download-link"
-            href={project.download.href}
-            download={project.download.filename}
-            aria-label={t("actions.downloadProject", { title: project.title })}
-          >
-            <Download size={16} aria-hidden="true" /> {t("actions.downloadApk")}
-          </a>
-        )}
+        {project.apkSource && <ApkDownloadButton project={project} compact />}
       </div>
     </article>
   );

@@ -1,7 +1,8 @@
 import { images } from "@/assets";
 import type { ProjectDefinition } from "@/types/project";
 
-export const githubProfile = "https://github.com/PedroHda";
+export const githubOwner = "PedroHda";
+export const githubProfile = `https://github.com/${githubOwner}`;
 
 export function repositoryUrl(project: Pick<ProjectDefinition, "repository">) {
   return `${githubProfile}/${project.repository}`;
@@ -19,12 +20,7 @@ export const projects: ProjectDefinition[] = [
     "category": "apps",
     "tags": ["C#", ".NET for Android", "Windows Forms", "Markdig"],
     "readmeAvailable": true,
-    "download": {
-      "href": "https://github.com/PedroHda/MDReader/releases/download/android-v1.0.0/MDReader.apk",
-      "filename": "MDReader.apk",
-      "version": "1.0.0",
-      "sizeMB": 62.631
-    }
+    "apkSource": {}
   },
   {
     "slug": "coloring-game",
@@ -40,6 +36,7 @@ export const projects: ProjectDefinition[] = [
       "SQLite"
     ],
     "readmeAvailable": true,
+    "apkSource": {},
     "preview": {
       "src": images.projects.coloringGame,
       "width": 755,
@@ -58,13 +55,7 @@ export const projects: ProjectDefinition[] = [
       "Android"
     ],
     "readmeAvailable": true,
-    "download": {
-      "href": "https://github.com/PedroHda/CarrinhoDeCompras/releases/download/v1.1.0/carrinho-de-compras-1.1.0-teste.apk",
-      "filename": "carrinho-de-compras-1.1.0-teste.apk",
-      "version": "1.1.0",
-      "sizeMB": 106,
-      "variant": "test"
-    },
+    "apkSource": { "preferredVariant": "test" },
     "preview": {
       "src": images.projects.shoppingCart,
       "width": 430,
@@ -83,13 +74,7 @@ export const projects: ProjectDefinition[] = [
       "CSS"
     ],
     "readmeAvailable": true,
-    "download": {
-      "href": "https://raw.githubusercontent.com/PedroHda/NossoCasamento/master/apk/NossoCasamento-v1.0.0-demo.apk",
-      "filename": "NossoCasamento-v1.0.0-demo.apk",
-      "version": "1.0.0",
-      "sizeMB": 4.4,
-      "variant": "demo"
-    },
+    "apkSource": { "preferredVariant": "demo" },
     "preview": {
       "src": images.projects.wedding,
       "width": 1425,
@@ -108,12 +93,7 @@ export const projects: ProjectDefinition[] = [
       "SQLite"
     ],
     "readmeAvailable": true,
-    "download": {
-      "href": "https://raw.githubusercontent.com/PedroHda/ProjetoVan/master/apks/VansEscola.apk",
-      "filename": "VansEscola.apk",
-      "version": "1.0.4",
-      "sizeMB": 39.7
-    },
+    "apkSource": {},
     "preview": {
       "src": images.projects.schoolTransport,
       "width": 1280,

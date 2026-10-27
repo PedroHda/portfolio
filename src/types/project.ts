@@ -1,4 +1,5 @@
 import type { StaticImageData } from "next/image";
+import type { ApkFile, ApkSource } from "./apk";
 
 export type ProjectCategory = "apps" | "games" | "websites";
 
@@ -9,24 +10,18 @@ export type ProjectDefinition = {
   category: ProjectCategory;
   tags: string[];
   readmeAvailable: boolean;
-  download?: {
-    href: string;
-    filename: string;
-    version: string;
-    sizeMB: number;
-    variant?: "test" | "demo";
-  };
+  apkSource?: ApkSource;
   preview?: { src: StaticImageData; width: number; height: number };
 };
 
-export type Project = Omit<ProjectDefinition, "download" | "preview"> & {
+export type Project = Omit<ProjectDefinition, "preview"> & {
   type: string;
   status: string;
   description: string;
   overview: string;
   features: string[];
   notes: string;
-  download?: NonNullable<ProjectDefinition["download"]> & {
+  download?: ApkFile & {
     displayVersion: string;
     size: string;
     requirements: string;

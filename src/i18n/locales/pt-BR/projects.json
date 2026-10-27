@@ -14,7 +14,7 @@
       "notes": "O MDReader é um leitor e não altera os documentos. O APK Android está publicado; a versão Windows pode ser compilada como executável portátil pelas instruções do repositório.",
       "download": {
         "requirements": "Android 8.0 ou superior",
-        "note": "APK assinado da versão 1.0.0 do MDReader para Android. Abra arquivos Markdown pelo seletor de documentos do celular."
+        "note": "Abra arquivos Markdown pelo seletor de documentos do celular. O APK é selecionado automaticamente no GitHub."
       }
     },
     "coloring-game": {
@@ -32,6 +32,10 @@
       "preview": {
         "alt": "Editor de pintura do Colorê com uma ilustração em andamento e ferramentas de cores",
         "caption": "Captura da versão web publicada na documentação do projeto."
+      },
+      "download": {
+        "requirements": "Android · confira a compatibilidade no repositório",
+        "note": "Quando um APK for publicado, a versão mais recente aparecerá aqui automaticamente."
       }
     },
     "carrinho-de-compras": {
@@ -48,7 +52,7 @@
       "notes": "O APK recomendado no README instala o Carrinho Teste, que pode coexistir com o aplicativo original. Os dados ficam no aparelho; a transferência entre instalações é feita por backup.",
       "download": {
         "requirements": "Android 7.0 ou superior",
-        "note": "Instala como Carrinho Teste. É a versão recomendada pelo projeto para testar sem substituir o aplicativo anterior."
+        "note": "Quando disponível na mesma versão, é priorizado o Carrinho Teste, que pode coexistir com o aplicativo original. Use backups para transferir seus dados."
       },
       "preview": {
         "alt": "Tela do Carrinho de Compras com listas de supermercado e progresso dos itens",

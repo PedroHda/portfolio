@@ -1,6 +1,7 @@
 import type { TFunction } from "i18next";
 import type { Project, ProjectDefinition } from "@/types/project";
 import type { Locale } from "./config";
+import type { ApkState } from "@/types/apk";
 
 export function translateList(t: TFunction, key: string): string[] {
   const result: unknown = t(key, { returnObjects: true });
@@ -14,24 +15,28 @@ export function localizeProject(
   project: ProjectDefinition,
   t: TFunction,
   locale: Locale,
+  apkState?: ApkState,
 ): Project {
   const key = `projects:items.${project.slug}`;
+  const apk = apkState?.status === "ready" ? apkState.file : undefined;
+  const stateLabels = { loading: "checking", ready: "available", missing: "notPublished", error: "unavailable" };
   return {
     ...project,
     type: t(`${key}.type`),
-    status: t(`${key}.status`),
+    status: project.apkSource ? t(`download.${stateLabels[apkState?.status ?? "loading"]}`) : t(`${key}.status`),
     description: t(`${key}.description`),
     overview: t(`${key}.overview`),
     features: translateList(t, `${key}.features`),
     notes: t(`${key}.notes`),
-    download: project.download ? {
-      ...project.download,
+    download: apk ? {
+      ...apk,
       displayVersion: [
-        project.download.version,
-        project.download.variant && t(`download.variants.${project.download.variant}`),
+        apk.version ?? t("download.latest"),
+        apk.variant && t(`download.variants.${apk.variant}`),
+        apk.prerelease && t("download.prerelease"),
       ].filter(Boolean).join(" · "),
       size: t("download.size", {
-        size: new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(project.download.sizeMB),
+        size: new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(apk.sizeBytes / 1_000_000),
       }),
       requirements: t(`${key}.download.requirements`),
       note: t(`${key}.download.note`),

@@ -75,7 +75,19 @@
       "Open the APK in your Downloads folder.",
       "If prompted, allow installation from the browser or file manager you used.",
       "Finish the installation and open the app."
-    ]
+    ],
+    "filename": "File name",
+    "latest": "Latest",
+    "prerelease": "Prerelease",
+    "available": "APK available",
+    "checking": "Checking APK…",
+    "checkingProject": "Checking {{title}} APK",
+    "retry": "Try again",
+    "retryProject": "Try checking {{title}} APK again",
+    "error": "Could not check the latest APK.",
+    "unavailable": "APK lookup unavailable",
+    "notPublished": "No APK published yet.",
+    "noResults": "No APK found. If a lookup failed, try again on the project card."
   },
   "footer": {
     "label": "Contact",

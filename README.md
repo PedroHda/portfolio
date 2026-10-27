@@ -29,7 +29,7 @@ src/
 │   └── [locale]/         # Rotas traduzidas: /en e /en/projetos/[slug]
 ├── assets/images/        # Logos, fotos e capturas dos projetos
 ├── components/           # Componentes compartilhados, incluindo seletor de idioma
-├── data/                 # Identidade, URLs, tecnologias e arquivos para download
+├── data/                 # Identidade, repositórios, tecnologias e configuração de APKs
 ├── i18n/
 │   ├── config.ts         # Idiomas habilitados, fallback e prefixos de URL
 │   ├── resources.ts      # Registro dos catálogos, com validação de estrutura
@@ -47,6 +47,7 @@ src/
 ├── screens/
 │   ├── home/             # Página inicial e suas seções
 │   └── project-details/  # Detalhes e componentes exclusivos dessa tela
+├── services/github-apks.ts # Descoberta, comparação de versões e cache de consultas
 ├── styles/globals.css    # Estilos, temas e responsividade
 └── types/                # Tipos dos dados profissionais e dos projetos
 ```
@@ -66,7 +67,9 @@ fixa. As imagens atuais são importadas de `src/assets/` durante o build.
 | Descrições, funcionalidades e notas dos projetos | `src/i18n/locales/{idioma}/projects.json` |
 | Botões, menu, acessibilidade e rótulos | `src/i18n/locales/{idioma}/common.json` |
 | Contato, LinkedIn e Fiverr | `src/data/profile.ts` |
-| Repositórios, tecnologias, imagens e APKs | `src/data/projects.ts` |
+| Repositórios, tecnologias, imagens e descoberta de APKs | `src/data/projects.ts` |
+| Como o APK mais recente é encontrado | `src/services/github-apks.ts` |
+| Estado e botão de download dos APKs | `src/components/apk-downloads/` e `apk-download-button/` |
 | Estrutura da página inicial | `src/screens/home/sections/` |
 | Aparência da página de detalhes | `src/screens/project-details/` |
 | Cards e filtros | `src/components/project-card/` e `project-list/` |
@@ -106,29 +109,53 @@ Somente PT-BR e inglês estão cadastrados atualmente.
 Os cards abrem páginas individuais com resumos dos READMEs. Os textos ficam nos
 catálogos; os dados e links permanecem em `src/data/projects.ts`.
 
-Downloads diretos publicados no GitHub:
+Os APKs são encontrados **durante o uso do site**, pela API pública do GitHub,
+sem token no navegador e sem precisar publicar novamente o portfólio:
 
-- **MDReader:** APK Android 1.0.0, Android 8.0+, release `android-v1.0.0`.
-- **Carrinho de Compras:** APK Carrinho Teste 1.1.0, recomendado pelo README.
-- **Nosso Casamento:** APK de demonstração 1.0.0.
-- **Projeto Van / RotaCerta:** `apks/VansEscola.apk`, versão 1.0.4.
+1. A consulta verifica assets de releases públicas e arquivos `.apk` em todas as
+   pastas da branch padrão do repositório. Rascunhos são ignorados; pré-lançamentos
+   públicos entram na seleção e recebem um aviso na versão exibida.
+2. O padrão recomendado é **`NomeDoApp-1.2.0.apk`**. O prefixo `v` e os nomes
+   anteriores, como `NossoCasamento-v2.0.0-demo.apk`, também são reconhecidos.
+3. A maior versão numérica vence: `1.10.0` é maior que `1.9.0`. Publicar outra vez
+   uma versão antiga não a torna mais recente. Para arquivos de release sem versão
+   no nome, a versão é extraída da tag; arquivos sem nenhuma versão reconhecível
+   são usados quando não há candidato versionado, pela data da alteração.
+4. Na mesma versão, `preferredVariant` mantém a preferência pelo Carrinho Teste
+   e pela demonstração do Nosso Casamento. Data de publicação/alteração desempata.
+   O download de arquivos do repositório usa o commit do arquivo selecionado.
+5. Nome, versão, tamanho, disponibilidade nos cards e o filtro **Com APK** usam o
+   resultado da consulta. O ColoringGame passa a exibir o download quando receber
+   seu primeiro APK, pois também tem `apkSource` cadastrado.
+6. Consultas de exibição são compartilhadas por cinco minutos na aba. **Cada clique
+   em baixar consulta novamente** antes de abrir o arquivo mais recente. Em caso
+   de falha de rede, limite da API ou consulta incompleta, há um aviso e opção de
+   tentar novamente; uma URL antiga não é usada como alternativa silenciosa.
 
-Para atualizar um instalador, altere sua URL direta, nome de arquivo, versão e
-`sizeMB` nos dados; atualize os requisitos e notas em ambos os catálogos de projetos.
-Os APKs continuam hospedados no GitHub e são os mesmos para todos os idiomas.
-O ColoringGame ainda não possui APK publicado. O resumo da imobiliária se baseia
-na versão local, pois seu repositório público ainda está vazio.
+Para publicar uma atualização: envie o APK com o novo número da versão para uma
+release pública ou faça commit na branch padrão do próprio projeto. APKs locais,
+branches diferentes e releases em rascunho não ficam disponíveis no portfólio.
+
+Para habilitar outro projeto, adicione `apkSource: {}` aos dados em
+`src/data/projects.ts`. Não cadastre URL, tamanho ou versão manualmente. Requisitos
+Android e notas de instalação continuam nos catálogos dos dois idiomas e devem ser
+revisados se mudarem. Os arquivos continuam hospedados no GitHub.
+
+O resumo da imobiliária se baseia na versão local, pois seu repositório público
+ainda está vazio.
 
 ## Verificações e publicação
 
 ```bash
 npm run test:i18n
+npm run test:apks
 npm run typecheck
 npm run build
 npm run check:export
 ```
 
-Os testes verificam catálogos, interpolação, pluralização, fallback e troca de URLs.
+Os testes verificam catálogos, interpolação, pluralização, fallback, troca de URLs,
+ordenação das versões, descoberta de APKs, paginação e recuperação de falhas.
 A verificação de exportação valida idiomas, metadados, referências internas,
-links dos APKs e a navegação das páginas geradas. O build produz `out/`, que já
+estados dos downloads e a navegação das páginas geradas. O build produz `out/`, que já
 é a pasta publicada pela configuração existente em `netlify.toml`.

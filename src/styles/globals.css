@@ -994,6 +994,30 @@ section {
 
 .project-download-link {
   color: var(--teal);
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.apk-download-state {
+  display: grid;
+  gap: 8px;
+}
+
+.apk-download-state button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.download-error {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.project-sidebar .apk-download-state {
+  margin-top: 18px;
 }
 
 .project-download-link:hover,
@@ -1191,6 +1215,7 @@ section {
   color: var(--ink);
   font-weight: 750;
   text-align: right;
+  overflow-wrap: anywhere;
 }
 
 .project-sidebar .button {
