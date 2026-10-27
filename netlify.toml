@@ -5,3 +5,15 @@
 [build.environment]
   NODE_VERSION = "22"
   NPM_VERSION = "10"
+
+# Rota estável: a resposta final do GitHub é o arquivo APK como attachment.
+[[redirects]]
+  from = "/downloads/carrinho-de-compras.apk"
+  to = "https://github.com/PedroHda/CarrinhoDeCompras/releases/latest/download/carrinho-de-compras.apk"
+  status = 302
+  force = true
+
+[[headers]]
+  for = "/downloads/carrinho-de-compras.apk"
+  [headers.values]
+    Cache-Control = "no-store"

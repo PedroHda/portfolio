@@ -16,12 +16,13 @@ const release = (version, names = [`Example-${version}.apk`], overrides = {}) =>
 });
 const entry = (name, size = 2_000_000) => ({ path: `downloads/${name}`, type: "blob", mode: "100644", size });
 
-function github({ releases = [], tree = [], truncated = false, pages, failure, status = 503 } = {}) {
+function github({ releases = [], latest, tree = [], truncated = false, pages, failure, status = 503 } = {}) {
   const calls = [];
   const fetcher = async (url, init) => {
     calls.push(url);
     assert.equal(init.cache, "no-store");
     if (failure && url.includes(failure)) return new Response(null, { status });
+    if (url.endsWith("/releases/latest")) return latest ? Response.json(latest) : new Response(null, { status: 404 });
     if (url.includes("/releases?")) {
       const page = Number(new URL(url).searchParams.get("page") ?? 1);
       const headers = pages && page < pages.length ? { link: `<${root}/releases?per_page=100&page=${page + 1}>; rel="next"` } : {};
@@ -83,6 +84,29 @@ test("standard APK selection excludes test and demo builds regardless of version
   ];
   assert.equal(selectLatestApk([...variants, standard], { variant: "standard" }), standard);
   assert.equal(selectLatestApk(variants, { variant: "standard" }), null);
+});
+
+test("canonical release metadata stays aligned with latest download instead of a newer repository APK", async () => {
+  const { fetcher, calls } = github({
+    latest: release("1.2.0", ["Example.apk", "Example-teste-1.2.0.apk"]),
+    releases: [release("3.0.0", undefined, { prerelease: true })],
+    tree: [entry("Example-4.0.0.apk")],
+  });
+  const apk = await discoverLatestApk("PedroHda", "Example", { variant: "standard", releaseAsset: "Example.apk" }, fetcher);
+  assert.equal(apk.version, "1.2.0");
+  assert.equal(apk.filename, "Example.apk");
+  assert.equal(apk.href, "https://github.com/PedroHda/Example/releases/download/v1.2.0/Example.apk");
+  assert.equal(apk.source, "release");
+  assert.deepEqual(calls, [`${root}/releases/latest`]);
+});
+
+test("canonical release lookup never replaces a missing stable asset with a different build", async () => {
+  for (const latest of [undefined, release("1.2.0", ["Example-teste-1.2.0.apk"]),
+    release("2.0.0", ["Example.apk"], { prerelease: true }),
+    release("2.0.0", ["Example.apk"], { draft: true })]) {
+    const { fetcher } = github({ latest, releases: [release("1.1.0")] });
+    assert.equal(await discoverLatestApk("PedroHda", "Example", { releaseAsset: "Example.apk" }, fetcher), null);
+  }
 });
 
 test("discovers the original release APK when test filenames put teste before or after the version", async () => {

@@ -3,6 +3,8 @@ export type ApkVariant = "test" | "demo";
 export type ApkSource = {
   variant?: "standard" | ApkVariant;
   preferredVariant?: ApkVariant;
+  directDownloadHref?: string;
+  releaseAsset?: string;
 };
 
 export type ApkFile = {

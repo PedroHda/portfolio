@@ -101,6 +101,25 @@ export async function discoverLatestApk(
     return response;
   }
 
+  function releaseAssets(release: Release): ApkFile[] {
+    const files: ApkFile[] = [];
+    if (release.draft) return files;
+    for (const asset of release.assets) {
+      if (!/\.apk$/i.test(asset.name) || asset.state !== "uploaded") continue;
+      const download = new URL(asset.browser_download_url);
+      if (download.origin !== "https://github.com"
+        || !download.pathname.startsWith(`/${owner}/${repository}/releases/download/`)) continue;
+      const version = apkVersion(asset.name) ?? apkVersion(release.tag_name);
+      files.push({
+        href: download.href, filename: asset.name, version, sizeBytes: asset.size,
+        variant: variantOf(asset.name), prerelease: release.prerelease || Boolean(version?.includes("-")),
+        publishedAt: asset.updated_at > release.published_at ? asset.updated_at : release.published_at,
+        source: "release",
+      });
+    }
+    return files;
+  }
+
   async function releaseFiles(): Promise<ApkFile[]> {
     const files: ApkFile[] = [];
     let url: string | undefined = `${root}/releases?per_page=100`;
@@ -108,20 +127,7 @@ export async function discoverLatestApk(
       const response = await request(url);
       const releases: Release[] = await response.json();
       for (const release of releases) {
-        if (release.draft) continue;
-        for (const asset of release.assets) {
-          if (!/\.apk$/i.test(asset.name) || asset.state !== "uploaded") continue;
-          const download = new URL(asset.browser_download_url);
-          if (download.origin !== "https://github.com"
-            || !download.pathname.startsWith(`/${owner}/${repository}/releases/download/`)) continue;
-          const version = apkVersion(asset.name) ?? apkVersion(release.tag_name);
-          files.push({
-            href: download.href, filename: asset.name, version, sizeBytes: asset.size,
-            variant: variantOf(asset.name), prerelease: release.prerelease || Boolean(version?.includes("-")),
-            publishedAt: asset.updated_at > release.published_at ? asset.updated_at : release.published_at,
-            source: "release",
-          });
-        }
+        files.push(...releaseAssets(release));
       }
       const next = response.headers.get("link")?.match(/<([^>]+)>;\s*rel="next"/)?.[1];
       // Follow only pagination for this repository's release endpoint.
@@ -163,6 +169,18 @@ export async function discoverLatestApk(
         publishedAt: commit.commit.committer.date, source: "repository" as const,
       };
     }));
+  }
+
+  // Match metadata to the same release used by the stable download redirect.
+  if (source.releaseAsset) {
+    const response = await fetcher(`${root}/releases/latest`, {
+      headers, cache: "no-store", signal: AbortSignal.timeout(15_000),
+    });
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error(`GitHub latest APK lookup failed (${response.status})`);
+    const release: Release = await response.json();
+    if (release.prerelease) return null;
+    return selectLatestApk(releaseAssets(release).filter((file) => file.filename === source.releaseAsset), source);
   }
 
   // Both must succeed: a partial lookup could silently select an older APK.

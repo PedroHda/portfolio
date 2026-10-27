@@ -137,11 +137,21 @@ sem token no navegador e sem precisar publicar novamente o portfólio:
    API ou consulta incompleta, há um aviso e opção de tentar novamente; o link fica
    indisponível após a falha até que uma consulta seja concluída com sucesso.
 
+O Carrinho de Compras também tem uma rota estável própria:
+**`/downloads/carrinho-de-compras.apk`**. O botão nativo dessa aplicação funciona
+mesmo antes da consulta de metadados ou se a API do GitHub estiver limitada. A rota
+está em `netlify.toml` e responde com redirecionamento 302 para o arquivo canônico
+normal da release mais recente, sem abrir uma página do GitHub. O servidor de
+arquivos entrega o APK como anexo; não há download por `fetch` nem abertura de
+outra aba. Versão e tamanho são consultados em segundo plano usando somente o asset
+`carrinho-de-compras.apk` da mesma release estável (`releases/latest`), para manter
+os metadados alinhados ao arquivo baixado.
+
 Para publicar uma atualização: envie o APK com o novo número da versão para uma
 release pública ou faça commit na branch padrão do próprio projeto. APKs locais,
 branches diferentes e releases em rascunho não ficam disponíveis no portfólio.
 
-Para habilitar outro projeto, adicione `apkSource: {}` aos dados em
+Para habilitar outro projeto com descoberta automática, adicione `apkSource: {}` aos dados em
 `src/data/projects.ts`. Não cadastre URL, tamanho ou versão manualmente. Requisitos
 Android e notas de instalação continuam nos catálogos dos dois idiomas e devem ser
 revisados se mudarem. Os arquivos continuam hospedados no GitHub.

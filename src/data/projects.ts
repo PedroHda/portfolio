@@ -55,7 +55,11 @@ export const projects: ProjectDefinition[] = [
       "Android"
     ],
     "readmeAvailable": true,
-    "apkSource": { "variant": "standard" },
+    "apkSource": {
+      "variant": "standard",
+      "directDownloadHref": "/downloads/carrinho-de-compras.apk",
+      "releaseAsset": "carrinho-de-compras.apk"
+    },
     "preview": {
       "src": images.projects.shoppingCart,
       "width": 430,

@@ -7,6 +7,17 @@ const root = path.resolve("out");
 const slugs = Object.keys(JSON.parse(readFileSync("src/i18n/locales/pt-BR/projects.json", "utf8")).items);
 let checkedPages = 0;
 let checkedReferences = 0;
+const netlifyConfig = readFileSync("netlify.toml", "utf8");
+const redirects = [...netlifyConfig.matchAll(/\[\[redirects\]\]([\s\S]*?)(?=\n\[|$)/g)]
+  .map((match) => ({
+    from: match[1].match(/^\s*from\s*=\s*"([^"]+)"/m)?.[1],
+    to: match[1].match(/^\s*to\s*=\s*"([^"]+)"/m)?.[1],
+    status: Number(match[1].match(/^\s*status\s*=\s*(\d+)/m)?.[1]),
+  }));
+const cartDownload = "/downloads/carrinho-de-compras.apk";
+assert.ok(redirects.some((redirect) => redirect.from === cartDownload && redirect.status === 302
+  && redirect.to === "https://github.com/PedroHda/CarrinhoDeCompras/releases/latest/download/carrinho-de-compras.apk"),
+"Carrinho must redirect directly to the canonical normal APK, not a GitHub page");
 
 const originalHome = readFileSync(path.join(root, "index.html"), "utf8");
 const fiverrUrl = originalHome.match(/href="([^"]*fiverr\.com[^\"]*)"/)?.[1];
@@ -39,7 +50,8 @@ for (const locale of supportedLocales) {
       const url = decodeURIComponent(raw.split(/[?#]/)[0]);
       if (!url || url.startsWith("//")) continue;
       const target = path.join(root, url);
-      assert.ok([target, `${target}.html`, path.join(target, "index.html")].some((candidate) => existsSync(candidate) && statSync(candidate).isFile()), `Broken reference ${url} on ${route}`);
+      assert.ok(redirects.some((redirect) => redirect.from === url)
+        || [target, `${target}.html`, path.join(target, "index.html")].some((candidate) => existsSync(candidate) && statSync(candidate).isFile()), `Broken reference ${url} on ${route}`);
       if (raw.startsWith("/#") && locale !== defaultLocale) assert.fail(`Default-language navigation link on ${route}: ${raw}`);
       checkedReferences++;
     }
@@ -47,6 +59,12 @@ for (const locale of supportedLocales) {
       assert.ok(body.includes(projectMessages.mdreader.download.requirements));
       assert.ok(body.includes(common.download.checking));
       assert.ok(!body.includes("releases/download/android-v1.0.0/MDReader.apk"), "Static HTML must not pin an old APK");
+    }
+    if (slug === "carrinho-de-compras") {
+      const link = body.match(/<a\b[^>]*href="\/downloads\/carrinho-de-compras\.apk"[^>]*>/)?.[0];
+      assert.ok(link, `Carrinho download must be available before GitHub discovery: ${route}`);
+      assert.doesNotMatch(link, /target="_blank"/, "APK download must keep the native click in the current tab");
+      assert.ok(link.includes("download="), "Carrinho must expose a native download link");
     }
     checkedPages++;
   }

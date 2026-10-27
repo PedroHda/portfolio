@@ -9,17 +9,19 @@ export function ApkDownloadButton({ project, compact = false }: { project: Proje
   const { t } = useI18n();
   const { state, refresh } = useProjectApk(project);
   const className = compact ? "project-download-link" : "button button-primary";
+  const href = project.apkSource?.directDownloadHref
+    ?? (state.status === "ready" ? state.file?.href : undefined);
 
-  if (state.status === "missing") return null;
-  if (state.status === "ready" && state.file) {
+  if (href) {
     return (
       // Keep the native link activation so mobile browsers handle the attachment.
-      <a className={className} href={state.file.href} download={state.file.filename}
+      <a className={className} href={href} download={state.file?.filename ?? ""}
         aria-label={t("actions.downloadProject", { title: project.title })}>
         <Download size={compact ? 16 : 18} aria-hidden="true" /> {t("actions.downloadApk")}
       </a>
     );
   }
+  if (state.status === "missing") return null;
   return (
     <span className="apk-download-state" aria-live="polite">
       {state.status === "error" && <span className="download-error">{t("download.error")}</span>}
