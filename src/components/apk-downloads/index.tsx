@@ -2,7 +2,8 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { githubOwner } from "@/data/projects";
-import { createApkLoader } from "@/services/github-apks";
+import { publishedApks } from "@/data/published-apks";
+import { apkLookupFailed, createApkLoader, initialApkStates } from "@/services/github-apks";
 import type { ApkFile, ApkState } from "@/types/apk";
 import type { ProjectDefinition } from "@/types/project";
 
@@ -15,16 +16,17 @@ type DownloadsContext = {
 const context = createContext<DownloadsContext | null>(null);
 
 export function ApkDownloadsProvider({ projects, children }: { projects: ProjectDefinition[]; children: ReactNode }) {
-  const [states, setStates] = useState<Record<string, ApkState>>({});
+  const [states, setStates] = useState(() => initialApkStates(projects, publishedApks));
   const refresh = useCallback(async (project: ProjectDefinition) => {
     if (!project.apkSource) return null;
-    setStates((current) => ({ ...current, [project.repository]: { ...current[project.repository], status: "loading" } }));
+    setStates((current) => ({ ...current, [project.repository]: current[project.repository]?.file
+      ? current[project.repository] : { status: "loading" } }));
     try {
       const file = await load(githubOwner, project.repository, project.apkSource, true);
       setStates((current) => ({ ...current, [project.repository]: { status: file ? "ready" : "missing", file: file ?? undefined } }));
       return file;
     } catch (error) {
-      setStates((current) => ({ ...current, [project.repository]: { ...current[project.repository], status: "error" } }));
+      setStates((current) => ({ ...current, [project.repository]: apkLookupFailed(current[project.repository]) }));
       throw error;
     }
   }, []);
@@ -38,7 +40,7 @@ export function ApkDownloadsProvider({ projects, children }: { projects: Project
         void load(githubOwner, project.repository, project.apkSource).then((file) => {
           if (active) setStates((current) => ({ ...current, [project.repository]: { status: file ? "ready" : "missing", file: file ?? undefined } }));
         }).catch(() => {
-          if (active) setStates((current) => ({ ...current, [project.repository]: { status: "error" } }));
+          if (active) setStates((current) => ({ ...current, [project.repository]: apkLookupFailed(current[project.repository]) }));
         });
       }
     }

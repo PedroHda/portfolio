@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { apkVersion, compareVersions, createApkLoader, discoverLatestApk, selectLatestApk } from "../src/services/github-apks.ts";
+import { apkLookupFailed, apkVersion, compareVersions, createApkLoader, discoverLatestApk, initialApkStates, selectLatestApk } from "../src/services/github-apks.ts";
+import { publishedApks } from "../src/data/published-apks.ts";
+import { apkSources } from "../src/data/apk-sources.ts";
 
 const root = "https://api.github.com/repos/PedroHda/Example";
 const commitSha = "a".repeat(40);
@@ -42,6 +44,38 @@ test("recognizes nome-versão.apk and existing filename/tag formats", () => {
   assert.equal(apkVersion("android-v1.0.0"), "1.0.0");
   assert.equal(apkVersion("MeuApp-2.0.0-beta.10.APK"), "2.0.0-beta.10");
   assert.equal(apkVersion("MeuApp.apk"), undefined);
+});
+
+test("all four published APKs are available before any GitHub request", () => {
+  const projects = Object.entries(apkSources).map(([repository, apkSource]) => ({ repository, apkSource }));
+  const states = initialApkStates(projects, publishedApks);
+  assert.deepEqual(Object.entries(states).filter(([, state]) => state.status === "ready").map(([repository]) => repository),
+    ["MDReader", "CarrinhoDeCompras", "NossoCasamento", "ProjetoVan"]);
+  assert.equal(states.ColoringGame.status, "missing");
+  assert.equal(states.CarrinhoDeCompras.file.variant, undefined);
+});
+
+test("failed metadata checks keep published APKs available even after a loading state", () => {
+  for (const apk of Object.values(publishedApks).filter(Boolean)) {
+    assert.deepEqual(apkLookupFailed({ status: "loading", file: apk }), { status: "ready", file: apk });
+    assert.deepEqual(apkLookupFailed({ status: "ready", file: apk }), { status: "ready", file: apk });
+  }
+  assert.deepEqual(apkLookupFailed(), { status: "error" });
+  assert.deepEqual(apkLookupFailed({ status: "loading" }), { status: "error" });
+});
+
+test("published metadata respects the original APK restriction and does not invent downloads for new projects", () => {
+  const states = initialApkStates([
+    { repository: "Example", apkSource: { variant: "standard" } },
+    { repository: "NewApp", apkSource: {} }, { repository: "Website" },
+    { repository: "Canonical", apkSource: { releaseAsset: "app.apk" } },
+  ], { Example: file("2.0.0", { variant: "test" }), Canonical: file("1.0.0") });
+  assert.equal(states.Example.status, "loading");
+  assert.equal(states.Example.file, undefined);
+  assert.equal(states.Canonical.status, "loading");
+  assert.equal(states.Canonical.file, undefined);
+  assert.equal(states.NewApp.status, "loading");
+  assert.equal(states.Website, undefined);
 });
 
 test("compares version numbers and prereleases numerically", () => {

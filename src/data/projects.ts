@@ -1,4 +1,5 @@
 import { images } from "@/assets";
+import { apkSources } from "./apk-sources";
 import type { ProjectDefinition } from "@/types/project";
 
 export const githubOwner = "PedroHda";
@@ -20,7 +21,7 @@ export const projects: ProjectDefinition[] = [
     "category": "apps",
     "tags": ["C#", ".NET for Android", "Windows Forms", "Markdig"],
     "readmeAvailable": true,
-    "apkSource": {}
+    "apkSource": apkSources.MDReader
   },
   {
     "slug": "coloring-game",
@@ -36,7 +37,7 @@ export const projects: ProjectDefinition[] = [
       "SQLite"
     ],
     "readmeAvailable": true,
-    "apkSource": {},
+    "apkSource": apkSources.ColoringGame,
     "preview": {
       "src": images.projects.coloringGame,
       "width": 755,
@@ -55,11 +56,7 @@ export const projects: ProjectDefinition[] = [
       "Android"
     ],
     "readmeAvailable": true,
-    "apkSource": {
-      "variant": "standard",
-      "directDownloadHref": "/downloads/carrinho-de-compras.apk",
-      "releaseAsset": "carrinho-de-compras.apk"
-    },
+    "apkSource": apkSources.CarrinhoDeCompras,
     "preview": {
       "src": images.projects.shoppingCart,
       "width": 430,
@@ -78,7 +75,7 @@ export const projects: ProjectDefinition[] = [
       "CSS"
     ],
     "readmeAvailable": true,
-    "apkSource": { "preferredVariant": "demo" },
+    "apkSource": apkSources.NossoCasamento,
     "preview": {
       "src": images.projects.wedding,
       "width": 1425,
@@ -97,7 +94,7 @@ export const projects: ProjectDefinition[] = [
       "SQLite"
     ],
     "readmeAvailable": true,
-    "apkSource": {},
+    "apkSource": apkSources.ProjetoVan,
     "preview": {
       "src": images.projects.schoolTransport,
       "width": 1280,

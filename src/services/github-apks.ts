@@ -1,4 +1,4 @@
-import type { ApkFile, ApkSource, ApkVariant } from "../types/apk";
+import type { ApkFile, ApkSource, ApkState, ApkVariant } from "../types/apk";
 
 type Release = {
   draft: boolean;
@@ -82,6 +82,26 @@ export function selectLatestApk(files: ApkFile[], source: ApkSource = {}): ApkFi
       || Number(b.source === "release") - Number(a.source === "release")
       || a.filename.localeCompare(b.filename);
   })[0] ?? null;
+}
+
+export function initialApkStates(
+  projects: { repository: string; apkSource?: ApkSource }[],
+  published: Record<string, ApkFile | null>,
+): Record<string, ApkState> {
+  return Object.fromEntries(projects.filter((project) => project.apkSource).map((project) => {
+    const known = published[project.repository];
+    if (known === undefined) return [project.repository, { status: "loading" }];
+    if (known && project.apkSource?.releaseAsset && known.filename !== project.apkSource.releaseAsset) {
+      return [project.repository, { status: "loading" }];
+    }
+    const file = selectLatestApk(known ? [known] : [], project.apkSource);
+    return [project.repository, { status: file ? "ready" : known ? "loading" : "missing", file: file ?? undefined }];
+  }));
+}
+
+export function apkLookupFailed(previous?: ApkState): ApkState {
+  // A metadata lookup failure does not invalidate an already verified download.
+  return previous?.file ? { status: "ready", file: previous.file } : { status: "error" };
 }
 
 export async function discoverLatestApk(

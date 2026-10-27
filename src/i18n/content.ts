@@ -23,7 +23,7 @@ export function localizeProject(
   return {
     ...project,
     type: t(`${key}.type`),
-    status: project.apkSource ? t(`download.${stateLabels[apkState?.status ?? "loading"]}`) : t(`${key}.status`),
+    status: project.apkSource ? t(`download.${project.apkSource.directDownloadHref ? "available" : stateLabels[apkState?.status ?? "loading"]}`) : t(`${key}.status`),
     description: t(`${key}.description`),
     overview: t(`${key}.overview`),
     features: translateList(t, `${key}.features`),

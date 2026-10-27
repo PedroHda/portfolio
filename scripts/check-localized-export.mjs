@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { defaultLocale, localeDefinitions, supportedLocales } from "../src/i18n/config.ts";
+import { publishedApks } from "../src/data/published-apks.ts";
 
 const root = path.resolve("out");
 const slugs = Object.keys(JSON.parse(readFileSync("src/i18n/locales/pt-BR/projects.json", "utf8")).items);
@@ -15,6 +16,12 @@ const redirects = [...netlifyConfig.matchAll(/\[\[redirects\]\]([\s\S]*?)(?=\n\[
     status: Number(match[1].match(/^\s*status\s*=\s*(\d+)/m)?.[1]),
   }));
 const cartDownload = "/downloads/carrinho-de-compras.apk";
+const downloadLinks = {
+  mdreader: publishedApks.MDReader.href,
+  "carrinho-de-compras": cartDownload,
+  "nosso-casamento": publishedApks.NossoCasamento.href,
+  "projeto-van": publishedApks.ProjetoVan.href,
+};
 assert.ok(redirects.some((redirect) => redirect.from === cartDownload && redirect.status === 302
   && redirect.to === "https://github.com/PedroHda/CarrinhoDeCompras/releases/latest/download/carrinho-de-compras.apk"),
 "Carrinho must redirect directly to the canonical normal APK, not a GitHub page");
@@ -34,8 +41,17 @@ for (const locale of supportedLocales) {
     const body = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "");
     assert.ok(html.includes(`lang="${locale}"`), `Wrong document language: ${route}`);
     assert.ok(body.includes(common.language.label), `Wrong language selector label: ${route}`);
-    if (!slug || projectMessages[slug].download) {
-      assert.ok(body.includes(common.download.checking), `Missing translated APK lookup state: ${route}`);
+    if (!slug || downloadLinks[slug]) {
+      assert.ok(body.includes(common.download.available), `Missing published APK availability: ${route}`);
+      const anchors = [...body.matchAll(/<a\b[^>]*>/g)].map((match) => match[0]);
+      for (const [projectSlug, href] of Object.entries(downloadLinks)) {
+        if (slug && slug !== projectSlug) continue;
+        const link = anchors.find((anchor) => anchor.includes(`href="${href}"`));
+        assert.ok(link?.includes("download="), `Missing native APK download before GitHub discovery: ${projectSlug} on ${route}`);
+      }
+    }
+    if (slug === "coloring-game") {
+      assert.ok(body.includes(common.download.notPublished), `An unpublished project must not invent an APK: ${route}`);
     }
     assert.doesNotMatch(body, /(?:home|profile|projects):(?:hero|items|experiences|education)\./, route);
     if (slug) {
@@ -57,7 +73,7 @@ for (const locale of supportedLocales) {
     }
     if (slug === "mdreader") {
       assert.ok(body.includes(projectMessages.mdreader.download.requirements));
-      assert.ok(body.includes(common.download.checking));
+      assert.ok(body.includes(publishedApks.MDReader.filename));
       assert.ok(!body.includes("releases/download/android-v1.0.0/MDReader.apk"), "Static HTML must not pin an old APK");
     }
     if (slug === "carrinho-de-compras") {

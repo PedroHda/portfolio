@@ -25,7 +25,7 @@ export function ProjectSidebar({ project }: { project: Project }) {
             <div><dt>{t("download.file")}</dt><dd>{project.download.size} · APK</dd></div>
             <div><dt>{t("download.filename")}</dt><dd>{project.download.filename}</dd></div>
           </dl>}
-          {state.status === "missing" && <p className="download-note" role="status">{t("download.notPublished")}</p>}
+          {state.status === "missing" && !project.apkSource.directDownloadHref && <p className="download-note" role="status">{t("download.notPublished")}</p>}
           <ApkDownloadButton project={project} />
           {project.download && <p className="download-note">{project.download.note}</p>}
           {project.download && <details className="install-guide">

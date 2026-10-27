@@ -5,6 +5,8 @@
   "packageManager": "npm@10.9.2",
   "scripts": {
     "dev": "next dev",
+    "sync:apks": "node --experimental-strip-types scripts/sync-published-apks.mjs",
+    "prebuild": "npm run sync:apks",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",

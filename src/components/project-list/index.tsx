@@ -22,7 +22,7 @@ export function ProjectList() {
   const { states } = useApkDownloads();
   const [activeFilter, setActiveFilter] = useState<Filter>("all");
   const visibleProjects = definitions
-    .filter((project) => matchesFilter(project, activeFilter, Boolean(states[project.repository]?.file)))
+    .filter((project) => matchesFilter(project, activeFilter, Boolean(states[project.repository]?.file || project.apkSource?.directDownloadHref)))
     .map((project) => localizeProject(project, t, locale, states[project.repository]));
   const checkingApks = definitions.some((project) => project.apkSource
     && (!states[project.repository] || states[project.repository].status === "loading"));
@@ -40,7 +40,7 @@ export function ProjectList() {
             onClick={() => setActiveFilter(filter)}
           >
             {t(`filters.${filter}`)}
-            <span>{filter === "apk" && checkingApks ? "…" : definitions.filter((project) => matchesFilter(project, filter, Boolean(states[project.repository]?.file))).length}</span>
+            <span>{filter === "apk" && checkingApks ? "…" : definitions.filter((project) => matchesFilter(project, filter, Boolean(states[project.repository]?.file || project.apkSource?.directDownloadHref))).length}</span>
           </button>
         ))}
       </div>

@@ -18,7 +18,7 @@ export function ProjectCard({ project }: { project: Project }) {
         <span className="project-icon">
           <ProjectIcon slug={project.slug} />
         </span>
-        <span className={`project-status${project.download ? " has-download" : ""}`}>
+        <span className={`project-status${project.download || project.apkSource?.directDownloadHref ? " has-download" : ""}`}>
           {project.status}
         </span>
       </div>

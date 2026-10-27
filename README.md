@@ -67,7 +67,8 @@ fixa. As imagens atuais são importadas de `src/assets/` durante o build.
 | Descrições, funcionalidades e notas dos projetos | `src/i18n/locales/{idioma}/projects.json` |
 | Botões, menu, acessibilidade e rótulos | `src/i18n/locales/{idioma}/common.json` |
 | Contato, LinkedIn e Fiverr | `src/data/profile.ts` |
-| Repositórios, tecnologias, imagens e descoberta de APKs | `src/data/projects.ts` |
+| Repositórios, tecnologias e imagens | `src/data/projects.ts` |
+| Fontes de APKs e metadados publicados | `src/data/apk-sources.ts` e `src/data/published-apks.ts` |
 | Como o APK mais recente é encontrado | `src/services/github-apks.ts` |
 | Estado e botão de download dos APKs | `src/components/apk-downloads/` e `apk-download-button/` |
 | Estrutura da página inicial | `src/screens/home/sections/` |
@@ -109,8 +110,9 @@ Somente PT-BR e inglês estão cadastrados atualmente.
 Os cards abrem páginas individuais com resumos dos READMEs. Os textos ficam nos
 catálogos; os dados e links permanecem em `src/data/projects.ts`.
 
-Os APKs são encontrados **durante o uso do site**, pela API pública do GitHub,
-sem token no navegador e sem precisar publicar novamente o portfólio:
+Os APKs já publicados aparecem no HTML inicial usando metadados verificados em
+`src/data/published-apks.ts`. A API pública do GitHub atualiza esses dados durante
+o uso do site, sem token no navegador e sem precisar publicar novamente o portfólio:
 
 1. A consulta verifica assets de releases públicas e arquivos `.apk` em todas as
    pastas da branch padrão do repositório. Rascunhos são ignorados; pré-lançamentos
@@ -126,16 +128,22 @@ sem token no navegador e sem precisar publicar novamente o portfólio:
    data mais recente. No Nosso Casamento, `preferredVariant` mantém a preferência
    pela demonstração na mesma versão. Data de publicação/alteração desempata.
    O download de arquivos do repositório usa o commit do arquivo selecionado.
-5. Nome, versão, tamanho, disponibilidade nos cards e o filtro **Com APK** usam o
-   resultado da consulta. O ColoringGame passa a exibir o download quando receber
-   seu primeiro APK, pois também tem `apkSource` cadastrado.
+5. Nome, versão, tamanho, disponibilidade nos cards e o filtro **Com APK** começam
+   com os dados publicados e são atualizados quando a consulta conclui. O
+   ColoringGame passa a exibir o download quando receber seu primeiro APK, pois
+   também tem `apkSource` cadastrado.
 6. Consultas de exibição são compartilhadas por cinco minutos na aba. Ao abrir a
    página, voltar para a aba ou recuperar a conexão, a consulta é atualizada quando
    o cache expira. **O botão usa um link direto para o APK exibido**, preservando o
    clique nativo e o gerenciamento de downloads do Chrome no Android, sem aguardar
-   uma consulta ou redirecionar por JavaScript. Em caso de falha de rede, limite da
-   API ou consulta incompleta, há um aviso e opção de tentar novamente; o link fica
-   indisponível após a falha até que uma consulta seja concluída com sucesso.
+   uma consulta ou redirecionar por JavaScript. Uma falha de rede, limite da API ou
+   consulta incompleta mantém o último APK verificado disponível. Projetos sem um
+   arquivo conhecido mostram o aviso com opção de tentar novamente. Uma consulta
+   bem-sucedida que confirma a ausência de APK remove o arquivo da listagem.
+
+O build executa `npm run sync:apks` para atualizar o catálogo publicado. Se a API
+falhar, a geração preserva os dados verificados e o site continua compilando. O
+mesmo comando pode atualizar o catálogo local, sem editar versões ou URLs à mão.
 
 O Carrinho de Compras também tem uma rota estável própria:
 **`/downloads/carrinho-de-compras.apk`**. O botão nativo dessa aplicação funciona
@@ -151,8 +159,10 @@ Para publicar uma atualização: envie o APK com o novo número da versão para 
 release pública ou faça commit na branch padrão do próprio projeto. APKs locais,
 branches diferentes e releases em rascunho não ficam disponíveis no portfólio.
 
-Para habilitar outro projeto com descoberta automática, adicione `apkSource: {}` aos dados em
-`src/data/projects.ts`. Não cadastre URL, tamanho ou versão manualmente. Requisitos
+Para habilitar outro projeto com descoberta automática, cadastre sua fonte em
+`src/data/apk-sources.ts` e use-a como `apkSource` em `src/data/projects.ts`. Execute
+`npm run sync:apks` para incluir seus downloads no HTML inicial. Não cadastre URL,
+tamanho ou versão manualmente. Requisitos
 Android e notas de instalação continuam nos catálogos dos dois idiomas e devem ser
 revisados se mudarem. Os arquivos continuam hospedados no GitHub.
 
